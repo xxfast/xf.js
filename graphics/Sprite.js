@@ -16,29 +16,12 @@ class Sprite {
   }
 
   /*
-    * sets a singular resource location for the desired sprite
-    * @param {string} url - locaiton of the image resource.
-  */
-  resource(url){
-    this.image = new Array();
-    var image = new Image();
-    image.src = url;
-    image.callback = this;
-    image.onload = function(){
-      if(this.callback.scale.width==0 && this.callback.scale.height==0 )
-       this.callback.transform(this.width, this.height);
-       this.collider = this;
-    }
-    this.image.push(image);
-    return this;
-  }
-
-  /*
-    * @override
     * sets layered image resources for the desired sprite
-    * @param {string[]} url - locaitons of the spritesheet.
+    * important ! - the last last layer renders on top
+    * important ! - the first layer will be used as the collision mask by defult
+    * @param {string[]} url - location of the images layer by layer.
   */
-  resources(urls){
+  resource(urls){
     this.image = new Array();
     for(var i=0;i<urls.length;i++){
       var image = new Image();
@@ -49,7 +32,7 @@ class Sprite {
          this.callback.transform(this.width, this.height);
       }
       this.image.push(image);
-      this.collider = this;
+      if(!this.collider) this.collider = image;
     }
     return this;
   }
@@ -138,10 +121,9 @@ class Sprite {
     * sets the collision mask of the sprite
     * @param {string} mask - url of the mask to set.
   */
-  setCollisionMask(mask){
+  collideon(mask){
     var image = new Image();
     image.src = mask;
-    image.callback = this;
     this.collider = image;
     return this;
   }
@@ -159,9 +141,10 @@ class Sprite {
 
   /**
    * @author Joseph Lenton - PlayMyCode.com
+   *
    * @param {string} sprite - Sprite object this object colliding with.
    */
-  IsColliding(sprite){
+  colliding(sprite){
       // we need to avoid using floats, as were doing array lookups
       var x  = Math.round( this.position.x ),
           y  = Math.round( this.position.y ),
@@ -172,15 +155,6 @@ class Sprite {
           h  = this.scale.height,
           w2 = sprite.scale.width,
           h2 = sprite.scale.height ;
-
-      // deal with the image being centred
-      if ( false ) {
-          // fast rounding, but positive only
-          x  -= ( w/2 + 0.5) << 0
-          y  -= ( h/2 + 0.5) << 0
-          x2 -= (w2/2 + 0.5) << 0
-          y2 -= (h2/2 + 0.5) << 0
-      }
 
       // find the top left and bottom right corners of overlapping area
       var xMin = Math.max( x, x2 ),
