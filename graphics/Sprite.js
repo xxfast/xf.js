@@ -1,6 +1,8 @@
 class Sprite {
   constructor() {
     this.origin = {x:0,y:0};
+    this.scale = {width:0,height:0};
+    this.velocity = {x:0,y:0};
   }
   resource(url){
     this.url = url;
@@ -9,13 +11,11 @@ class Sprite {
     return this;
   }
   translate(x,y){
-    this.x = x;
-    this.y = y;
+    this.position = {x:x,y:y};
     return this;
   }
   transform(width,height){
-    this.width = width;
-    this.height = height;
+    this.scale = {width:width,height:height};
     return this;
   }
   rotate(degree){
@@ -26,12 +26,21 @@ class Sprite {
     this.origin = {x:x,y:y};
     return this;
   }
+  velocity(x,y){
+    this.velocity = {x:x,y:y};
+    return this;
+  }
+
+  update(){
+    this.position.x += this.velocity.x;
+    this.position.x += this.velocity.x;
+  }
   render(c){
     c.save();
-    c.translate(this.x+this.origin.x,this.y+this.origin.y);
+    c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
     c.rotate(-this.rotation + Math.PI/2.0);
-    c.translate(-this.x-this.origin.x, -this.y-this.origin.y);
-    c.drawImage(this.image,this.x,this.y,this.width,this.height);
+    c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
+    c.drawImage(this.image,this.position.x,this.position.y,this.scale.width,this.scale.height);
     c.restore();
   }
 }
