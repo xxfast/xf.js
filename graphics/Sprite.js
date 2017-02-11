@@ -2,7 +2,8 @@ class Sprite {
   constructor() {
     this.origin = {x:0,y:0};
     this.scale = {width:0,height:0};
-    this.velocity = {x:0,y:0};
+    this.speed = {x:0,y:0};
+    this.acceleration = {x:0,y:0};
   }
   resource(url){
     this.url = url;
@@ -27,14 +28,20 @@ class Sprite {
     return this;
   }
   velocity(x,y){
-    this.velocity = {x:x,y:y};
+    this.speed = {x:x,y:y};
+    return this;
+  }
+  accelerate(x,y){
+    this.acceleration = {x:x,y:y};
     return this;
   }
 
   update(){
-    this.position.x += this.velocity.x;
-    this.position.x += this.velocity.x;
+    this.speed = {x: this.speed.x + this.acceleration.x, y: this.speed.y + this.acceleration.y}
+    this.position.x += this.speed.x;
+    this.position.y += this.speed.y;
   }
+
   render(c){
     c.save();
     c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
