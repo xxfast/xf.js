@@ -1,8 +1,8 @@
+/**
+ * @author - Isuru Kusumal Rajapakse (xxfast)
+ * @description - Represents a singular sprite with embedded physics.
+*/
 class Sprite {
-  /** @description
-   * Represents a singular sprite with embedded physics.
-   * @constructor
-  */
   constructor() {
     this.position = {x:0,y:0};
     this.origin = {x:0,y:0};
