@@ -16,7 +16,6 @@ class Sprite {
     this.fpt = 1;
   }
 
-    * sets layered image resources for the desired sprite
   /**
     * returns the current state the sprite is in
   */
@@ -38,13 +37,24 @@ class Sprite {
   }
 
   /**
+    * plays the animation associated in the state (if any)
+    *   @param {string} fpt - sets the speed of playback [<0=slowmotion, 0=stopped, 1=normal, 1>=fastmotion]
+  */
   play(fpt=1){
     this.fpt = fpt;
     return this;
   }
 
   /**
+    * stops the animation associated in the state (if any)
+  */
+  stop(){
+    this.fpt = 0;
+    return this;
+  }
+
   /**
+    * sets a static layered image resources for the desired sprite
     * important ! - the last last layer renders on top
     * important ! - the first layer will be used as the collision mask by defult
     *   @param {string[]} url - location of the images layer by layer.
