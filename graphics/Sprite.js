@@ -55,6 +55,16 @@ class Sprite {
   }
 
   /**
+    * rewinds the animation associated in the state (if any)
+    * rewinds to the start by default.
+    *   @param {in} [to=0] - sets the frame to rewind to
+  */
+  rewind(to=0){
+    this.state().frame=to;
+    return this;
+  }
+
+  /**
     * sets a static layered image resources for the desired sprite
     * important ! - the last last layer renders on top
     * important ! - the first layer will be used as the collision mask by defult
@@ -135,17 +145,18 @@ class Sprite {
     * rotates the  sprite by given amount of degrees
     * @param {int} degree - amount of degrees to move.
   */
-  rotate(degree){
+  rotate(degree=0){
     this.rotation = (!this.rotation)?degree:this.rotation+degree;
     return this;
   }
 
   /**
     * sets the origin of the sprite to the given position
-    * @param {int} x - anchor in the x position.
-    * @param {int} x - anchor in the y position.
+    * if called without parameters, it defaults to center of the sprite
+    * @param {int} [x=width/2] - anchor in the x position.
+    * @param {int} [y=height/2] - anchor in the y position.
   */
-  center(x,y){
+  center(x=this.scale.width/2,y=this.scale.height/2){
     this.origin = {x:x,y:y};
     return this;
   }
@@ -210,10 +221,10 @@ class Sprite {
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     var img = this.collider;
-    // context.save();
-    // context.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
-    // context.rotate(-this.rotation + Math.PI/2.0);
-    // context.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
+    //context.save();
+    //context.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
+    //context.rotate(-this.rotation * Math.PI/180);
+    //context.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
     context.drawImage(img, 0, 0, this.scale.width, this.scale.height);
     return context.getImageData(0, 0, this.scale.width,  this.scale.height);
   }
@@ -327,8 +338,6 @@ class Sprite {
     this.speed = {x: this.speed.x + this.acceleration.x, y: this.speed.y + this.acceleration.y}
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
-    //frame control
-
     if(this.state().repeat>=1 || this.state().repeat<0){
       this.state().frame+= this.fpt;
       if(this.state().frame>this.state().nf-1){
