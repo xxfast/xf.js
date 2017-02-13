@@ -18,6 +18,7 @@ class Sprite {
 
   /**
     * returns the current state the sprite is in
+    *   @returns {state} current state
   */
   state() { return this.states[0]; }
 
@@ -25,10 +26,10 @@ class Sprite {
     * set the current state of the animation
     *   @param {string} id - unique name of the animation to go to
   */
-  goto(state){
+  goto(id){
     if(this.states.length==1) return this;
     for(var i=0; i<this.states.length; i++){
-      if(this.states[i].id==state){
+      if(this.states[i].id==id){
         this.states.unshift(this.states.splice(i,1));
         break;
       }
@@ -344,7 +345,7 @@ class Sprite {
   render(c){
     c.save();
     c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
-    c.rotate(-this.rotation + Math.PI/2.0);
+    c.rotate(-this.rotation * Math.PI/180);
     c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
     for(var i=0;i<this.state().layers.length;i++){
       if(!this.state().hasOwnProperty('frame')) c.drawImage(this.state().layers[i],this.position.x,this.position.y,this.scale.width,this.scale.height);
