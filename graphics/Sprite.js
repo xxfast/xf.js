@@ -19,7 +19,8 @@ class Sprite extends GameObject{
     this.mass = 1;
     this.states = [];
     this.fpt = 1;
-    this.debug.drawCollisionMask = 0;
+    this.debug.drawCollisionMask = false
+    this.debug.drawCenter = false;
   }
 
   /**
@@ -356,14 +357,14 @@ class Sprite extends GameObject{
     for(var i=0;i<this.state().layers.length;i++){
       var args = [this.state().layers[i]];
       if(this.state().hasOwnProperty('frame'))
-        args.push((this.state().cp[Math.round(this.state().frame)] || {x:0}).x,
-                  (this.state().cp[Math.round(this.state().frame)] || {y:0}).y,
-                  this.state().fw,
-                  this.state().fh);
-      args.push((this.position.x/camera.scale.width)*camera.target.canvas.width - (camera.position.x/camera.scale.width)*camera.target.canvas.width,
-                (this.position.y/camera.scale.height)* camera.target.canvas.height - (camera.position.y/camera.scale.height)* camera.target.canvas.height,
-                (this.scale.width/camera.scale.width)* camera.target.canvas.width,
-                (this.scale.height/camera.scale.height)* camera.target.canvas.height);
+        args.push((this.state().cp[Math.round(this.state().frame)] || {x:0}).x, // clipping x position of sprite cell
+                  (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell
+                  this.state().fw,  // width of sprite cell
+                  this.state().fh); // height of sprite cell
+      args.push((this.position.x/camera.scale.width)* camera.target.canvas.width - (camera.position.x/camera.scale.width)*camera.target.canvas.width, // x position to render
+                (this.position.y/camera.scale.height)* camera.target.canvas.height - (camera.position.y/camera.scale.height)* camera.target.canvas.height, // y position to render
+                (this.scale.width/camera.scale.width)* camera.target.canvas.width, // height to render
+                (this.scale.height/camera.scale.height)* camera.target.canvas.height); // width to render
       c.drawImage(...args);
 
     }
