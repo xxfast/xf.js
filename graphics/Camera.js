@@ -36,7 +36,7 @@ class Camera extends GameObject{
     c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
     c.rotate(-this.rotation * Math.PI/180);
     c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
-    c.fillStyle="black";
+    c.strokeStyle="black";
     c.font="12px Verdana";
     c.fillText(this.id,this.position.x, this.position.y- 5);
     c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height );

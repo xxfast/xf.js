@@ -19,8 +19,9 @@ class Sprite extends GameObject{
     this.mass = 1;
     this.states = [];
     this.fpt = 1;
-    this.debug.drawCollisionMask = false
-    this.debug.drawCenter = false;
+    this.debug.drawCollisionMask = false;
+    this.debug.drawBounds = true;
+    this.debug.drawCenter = true;
   }
 
   /**
@@ -361,16 +362,30 @@ class Sprite extends GameObject{
                   (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell
                   this.state().fw,  // width of sprite cell
                   this.state().fh); // height of sprite cell
-      args.push((this.position.x/camera.scale.width)* camera.target.canvas.width - (camera.position.x/camera.scale.width)*camera.target.canvas.width, // x position to render
-                (this.position.y/camera.scale.height)* camera.target.canvas.height - (camera.position.y/camera.scale.height)* camera.target.canvas.height, // y position to render
+      var rxoffset = (Math.cos(camera.rotation+this.rotation) + (this.position.x- camera.position.x));
+      var ryoffset = (Math.sin(camera.rotation+this.rotation) + (this.position.y- camera.position.y));
+      //alert(Math.cos(camera.rotation+this.rotation));
+      // console.log({rx: rxoffset,ry:ryoffset});
+      var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
+      var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
+      var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
+      var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
+      args.push( xoffset - xcoffset, // x position to render
+                 yoffset - ycoffset, // y position to render
                 (this.scale.width/camera.scale.width)* camera.target.canvas.width, // height to render
                 (this.scale.height/camera.scale.height)* camera.target.canvas.height); // width to render
       c.drawImage(...args);
 
     }
-    if(this.debug.drawCollisionMask && this.collider){
-      c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height);
-    }
     c.restore();
+    if(this.debug){
+      c.strokeStyle="red";
+      if(this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
+      if(this.debug.drawBounds) c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height ); // draw the bounding boxes
+      if(this.debug.drawCenter){
+        c.strokeStyle="yellow";
+        c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes
+      }
+    }
   }
 }
