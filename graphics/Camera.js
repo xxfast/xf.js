@@ -20,13 +20,14 @@ class Camera extends GameObject{
   /**
     * targets the camera at the given scene
     * @param {Scene} target - the scene the camera targted at.
+    *   @returns {Camera} itself
     */
   targets(scene){
     this.target = scene;
     return this;
   }
 
-  /*
+  /**
     * renders the camera itself
     * @param {context} c - the canvas to draw the camera on.
   */

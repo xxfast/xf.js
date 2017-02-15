@@ -10,12 +10,14 @@ class Scene extends GameObject{
     * @param {number} [y=0] - y position.
     * @param {int} [w=0] - desired width.
     * @param {int} [h=0] - desired height.
+    * @param {int} [h=0] - desired height.
     */
-  constructor(id,bg="white",w,h) {
+  constructor(id,bg="white",w,h,canvas=null) {
     super(id,0,0,w,h);
     this.elements = [];
     this.background = bg;
-    this.canvas = 0;
+    this.canvas = canvas;
+    this.debug.show = false;
   }
 
   /*
@@ -51,7 +53,7 @@ class Scene extends GameObject{
     * renders the scene on the given canvas,
     * if a camera is proviced, then as seen from the given camera
     * @param {context} c - the canvas to draw the scene on.
-    * @param {Camera} camera - the camera to look at the scene from.
+    * @param {Camera} [camera=false] - the camera to look at the scene from.
   */
   render(c,camera=false){
     this.canvas = c.canvas;
@@ -62,10 +64,22 @@ class Scene extends GameObject{
         this.elements[i].render(c,camera || undefined);
       }
     }
+    if(this.debug.show){
+        var i = 0;
+        c.fillStyle="white";
+        c.fillRect(-1,-1,100,Object.keys(this.debug).length*12+5);
+        for(var prop in this.debug){
+          c.fillStyle="black";
+          c.font="12px Helvatica";
+          c.fillText(prop + ': ' + this.debug[prop], 5, (++i)*12);
+        }
+        //c.strokeRect(-1,-1,100,i*12+5);
+    }
   }
 
   /**
     * clear the rendered patch for the scene
+    * @param {context} c - the canvas to clear the canvas scene on.
     */
   clear(c){
     c.fillStyle=this.background;

@@ -17,10 +17,12 @@
       this.scale = {width:w,height:h};
       this.origin = {x:0,y:0};
       this.rotation = 0;
+      this.debug = { };
   }
 
   /**
-    clones the object
+    * clones the object
+    *   @returns {GameObject} cloned game object
   */
   clone(){
     return new GameObject(this.id,this.position.x,this.position.y,this.scale.width,this.scale.height);
