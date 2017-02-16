@@ -344,12 +344,12 @@ class Sprite extends GameObject{
   }
 
 
-    /*
-      * renders the sprite on the given canvas,
-      * and if a camera is provided, then as seen from given camera
-      *   @param {context} c - the canvas context to draw the sprite on.
-      *   @param {Camera} camera - the camera to look at the sprite from.
-    */
+  /**
+    * renders the sprite on the given canvas,
+    * and if a camera is provided, then as seen from given camera
+    *   @param {context} c - the canvas context to draw the sprite on.
+    *   @param {Camera} camera - the camera to look at the sprite from.
+  */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
     c.save();
     c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
