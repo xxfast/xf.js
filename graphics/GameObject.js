@@ -73,10 +73,14 @@
     * @param {GameObject} obj - GameObject to see if this is within.
   */
   within(obj){
-    if ((this.position.x > (obj.position.x+obj.scale.width)) ||( obj.position.x > (this.position.x+ this.scale.width)))
-        return false;
-    if ((this.position.y > (obj.position.y+obj.scale.height)) ||( obj.position.y > (this.position.y+ this.scale.height)))
-        return false;
+    if(this.rotation == 0 && obj.rotation == 0){
+      if ((this.position.x > (obj.position.x+obj.scale.width)) ||( obj.position.x > (this.position.x+ this.scale.width)))
+          return false;
+      if ((this.position.y > (obj.position.y+obj.scale.height)) ||( obj.position.y > (this.position.y+ this.scale.height)))
+          return false;
+    }else{
+      
+    }
     return true;
   }
 
