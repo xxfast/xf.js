@@ -13,11 +13,24 @@ class Polygon extends GameObject {
     this.points = points;
     this.translate(points[0].x,points[0].y);
     this.center(this.position.x,this.position.y);
-    this.transform(this.width(),this.height());
+    this.scale = {width: this.width(),height:this.height()};
+    this.bounderies = this.bounds();
     this.color = color;
     this.rotation = 0;
   }
-  
+
+  bounds(){
+    var minx=this.points[0].x, miny=this.points[0].y;
+    var maxx=this.points[0].x, maxy=this.points[0].y;
+    for(var i=0;i<this.points.length;i++){
+      if(this.points[i].x<minx) minx = this.points[i].x;
+      if(this.points[i].y<miny) miny = this.points[i].y;
+      if(this.points[i].x>maxx) maxx = this.points[i].x;
+      if(this.points[i].y>maxy) maxy = this.points[i].y;
+    }
+    return {top:miny,right:maxx,down:maxy,left:minx};
+  }
+
   width(){
     var max=this.points[0].x, min=this.points[0].x;
     for(var i=0;i<this.points.length;i++){
@@ -53,7 +66,15 @@ class Polygon extends GameObject {
     * @param {int} height - desired height.
   */
   transform(width,height){
-    this.scale = {width:width,height:height};
+    for(var i=0; i<this.points.length;i++){
+      this.points[i].x = (this.points[i].x/this.scale.width) * width;
+      this.points[i].y = (this.points[i].y/this.scale.height) * height;
+    }
+    this.center((this.origin.x/this.scale.width)*width, (this.origin.y/this.scale.height)*height);
+    // this.position.x -= (this.origin.x/this.scale.width)*width;
+    // this.position.y -= (this.origin.y/this.scale.height)*height;
+    this.scale = {width:this.width(),height:this.height()};
+    this.bounderies = this.bounds();
     return this;
   }
 
@@ -61,7 +82,7 @@ class Polygon extends GameObject {
     * sets the origin of the polygon to the given position
     * if called without parameters, it defaults to center of the object
   */
-  center(x=this.scale.width/2,y=this.scale.height/2){
+  center(x=(this.bounderies.left+this.bounderies.right)/2,y=(this.bounderies.top+this.bounderies.down)/2){
     this.origin = {x:x,y:y};
     return this;
   }
@@ -73,11 +94,15 @@ class Polygon extends GameObject {
     *   @returns {Polygon} this - the object itself.
   */
   rotate(degree=0){
-    var rads = (degree * Math.PI)/180;
-    for (var point in this.points) {
-      B.x = A.x * cos(rads) - A.y * sin(rads);
-      B.y = A.x * sin(rads) + A.y * cos(rads);
+    var rads = -(degree * Math.PI)/180;
+    for (var i=0;i < this.points.length;i++) {
+      var dx = this.points[i].x - this.origin.x;
+      var dy = this.points[i].y - this.origin.y;
+      this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
+      this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
     }
+    this.scale = {width:this.width(),height:this.height()};
+    this.bounderies = this.bounds();
     return this;
   }
   /**
@@ -104,7 +129,7 @@ class Polygon extends GameObject {
     c.stroke();
     if(this.debug){
       c.strokeStyle="red";
-      if(this.debug.drawBounds) c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height ); // draw the bounding boxes
+      if(this.debug.drawBounds) c.strokeRect(this.position.x+this.bounderies.left,this.position.y+this.bounderies.top,this.scale.width,this.scale.height); // draw the bounding boxes
       if(this.debug.drawCenter){
         c.strokeStyle="yellow";
         c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes

@@ -17,7 +17,7 @@
       this.scale = {width:w,height:h};
       this.origin = {x:0,y:0};
       this.rotation = 0;
-      this.debug = { };
+      this.debug = {};
   }
 
   /**
@@ -79,7 +79,7 @@
       if ((this.position.y > (obj.position.y+obj.scale.height)) ||( obj.position.y > (this.position.y+ this.scale.height)))
           return false;
     }else{
-      
+
     }
     return true;
   }

@@ -344,7 +344,7 @@ class Sprite extends GameObject{
   }
 
 
-  /**
+  /*
     * renders the sprite on the given canvas,
     * and if a camera is provided, then as seen from given camera
     *   @param {context} c - the canvas context to draw the sprite on.
