@@ -1,13 +1,23 @@
-class Scene {
-  /** @description
-   * Represents a single scene.
-  */
-
-  constructor(id,bg="white",width,height) {
-    this.id = id;
+/**
+ * @author - Isuru Kusumal Rajapakse (xxfast)
+ * @description - Represents a single scene that contains child sprite elements
+*/
+class Scene extends GameObject{
+  /**
+    * Create an Scene.
+    * @param {string} id - name of the Scene.
+    * @param {number} [x=0] - x position.
+    * @param {number} [y=0] - y position.
+    * @param {int} [w=0] - desired width.
+    * @param {int} [h=0] - desired height.
+    * @param {int} [h=0] - desired height.
+    */
+  constructor(id,bg="white",w,h,canvas=null) {
+    super(id,0,0,w,h);
     this.elements = [];
     this.background = bg;
-    this.scale = {width:width, height:height};
+    this.canvas = canvas;
+    this.debug.show = false;
   }
 
   /*
@@ -39,16 +49,41 @@ class Scene {
     }
   }
 
-  /*
-    * renders the scene on the given canvas
+  /**
+    * renders the scene on the given canvas,
+    * if a camera is proviced, then as seen from the given camera
     * @param {context} c - the canvas to draw the scene on.
+    * @param {Camera} [camera=false] - the camera to look at the scene from.
   */
-  render(c){
-    cc.fillStyle=this.background;
-    cc.clearRect(0, 0, this.scale.width, this.scale.height);
-    cc.fillRect(0, 0, this.scale.width, this.scale.height );
+  render(c,camera=false){
+    this.canvas = c.canvas;
+    this.clear(c);
     for(var i=0; i<this.elements.length; i++){
-      this.elements[i].render(c);
+      var s = this.elements[i];
+      if(!camera || s.within(camera)){
+        this.elements[i].render(c,camera || undefined);
+      }
     }
+    if(this.debug.show){
+        var i = 0;
+        c.fillStyle="white";
+        c.fillRect(-1,-1,100,Object.keys(this.debug).length*12+5);
+        for(var prop in this.debug){
+          c.fillStyle="black";
+          c.font="12px Helvatica";
+          c.fillText(prop + ': ' + this.debug[prop], 5, (++i)*12);
+        }
+        //c.strokeRect(-1,-1,100,i*12+5);
+    }
+  }
+
+  /**
+    * clear the rendered patch for the scene
+    * @param {context} c - the canvas to clear the canvas scene on.
+    */
+  clear(c){
+    c.fillStyle=this.background;
+    c.clearRect(0, 0, this.scale.width, this.scale.height);
+    c.fillRect(0, 0, this.scale.width, this.scale.height );
   }
 }
