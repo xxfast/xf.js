@@ -22,6 +22,7 @@ class Sprite extends GameObject{
     this.debug.drawCollisionMask = false;
     this.debug.drawBounds = true;
     this.debug.drawCenter = true;
+    this.bounderies = this.bounds();
   }
 
   /**
@@ -105,8 +106,10 @@ class Sprite extends GameObject{
       image.src = urls[i];
       image.callback = this;
       image.onload = function(){
-        if(this.callback.scale.width==0 && this.callback.scale.height==0 )
-         this.callback.transform(this.width, this.height);
+        if(this.callback.scale.width==0 && this.callback.scale.height==0){
+          this.callback.bounderies = this.callback.bounds();
+          this.callback.transform(this.width, this.height);
+       }
       }
       state.layers.push(image);
       this.states.push(state);
@@ -196,6 +199,43 @@ class Sprite extends GameObject{
   }
 
   /**
+    * @virtual
+    * transform the  object to the given scale
+    * @param {int} width - desired width.
+    * @param {int} height - desired height.
+  */
+  transform(width,height){
+    super.transform(width,height);
+    this.bounds();
+    return this;
+  }
+
+  /**
+    * calculate the bounds object of the this sprite
+    * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
+  */
+  bounds(){
+    this.points = [{x:0, y:0},{x:+this.scale.width, y:0},
+                   {x:+this.scale.width, y:+this.scale.height},{x:0, y:0+this.scale.height}];
+    var rads = -(this.rotation * Math.PI)/180;
+    for (var i=0;i < this.points.length;i++) {
+     var dx = this.points[i].x - this.origin.x;
+     var dy = this.points[i].y - this.origin.y;
+     this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
+     this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
+    }
+    var minx=this.points[0].x, miny=this.points[0].y;
+    var maxx=this.points[0].x, maxy=this.points[0].y;
+    for(var i=0;i<this.points.length;i++){
+      if(this.points[i].x<minx) minx = this.points[i].x;
+      if(this.points[i].y<miny) miny = this.points[i].y;
+      if(this.points[i].x>maxx) maxx = this.points[i].x;
+      if(this.points[i].y>maxy) maxy = this.points[i].y;
+    }
+    return {top:miny,right:maxx,down:maxy,left:minx};
+  }
+
+  /**
     * sets the collision mask of the sprite
     *   @param {string} mask - url of the mask to set.
     *   @returns {Sprite} itself
@@ -247,8 +287,6 @@ class Sprite extends GameObject{
       h = h * c + w * s ;
       w2 =  h2 * s + w2 * c;
       h2 = h2 * c + w2 * s ;
-
-      //console.log(w,h,w2,h2);
 
        w  = this.scale.width,
           h  = this.scale.height,
@@ -381,7 +419,8 @@ class Sprite extends GameObject{
     if(this.debug){
       c.strokeStyle="red";
       if(this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
-      if(this.debug.drawBounds) c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height ); // draw the bounding boxes
+      this.bounderies = this.bounds();
+      if(this.debug.drawBounds) c.strokeRect(this.position.x+this.bounderies.left, this.position.y+this.bounderies.top, this.bounderies.right-this.bounderies.left, this.bounderies.down-this.bounderies.top); // draw the bounding boxes
       if(this.debug.drawCenter){
         c.strokeStyle="yellow";
         c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes

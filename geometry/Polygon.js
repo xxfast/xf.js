@@ -19,18 +19,6 @@ class Polygon extends GameObject {
     this.rotation = 0;
   }
 
-  bounds(){
-    var minx=this.points[0].x, miny=this.points[0].y;
-    var maxx=this.points[0].x, maxy=this.points[0].y;
-    for(var i=0;i<this.points.length;i++){
-      if(this.points[i].x<minx) minx = this.points[i].x;
-      if(this.points[i].y<miny) miny = this.points[i].y;
-      if(this.points[i].x>maxx) maxx = this.points[i].x;
-      if(this.points[i].y>maxy) maxy = this.points[i].y;
-    }
-    return {top:miny,right:maxx,down:maxy,left:minx};
-  }
-
   width(){
     var max=this.points[0].x, min=this.points[0].x;
     for(var i=0;i<this.points.length;i++){
@@ -67,16 +55,32 @@ class Polygon extends GameObject {
   */
   transform(width,height){
     for(var i=0; i<this.points.length;i++){
-      this.points[i].x = (this.points[i].x/this.scale.width) * width;
-      this.points[i].y = (this.points[i].y/this.scale.height) * height;
+      this.points[i].x = ((this.points[i].x )/this.scale.width) * width;
+      this.points[i].y = ((this.points[i].y )/this.scale.height) * height;
     }
-    this.center((this.origin.x/this.scale.width)*width, (this.origin.y/this.scale.height)*height);
-    // this.position.x -= (this.origin.x/this.scale.width)*width;
-    // this.position.y -= (this.origin.y/this.scale.height)*height;
+    var newxc = (this.origin.x/this.scale.width)*width;
+    var newyc = (this.origin.y/this.scale.height)*height;
+    this.position.x -= newxc - this.origin.x;
+    this.position.y -= newyc - this.origin.y;
+    this.center(newxc,newyc);
+    //this.position.y -= (this.origin.y/this.scale.height)*height;
     this.scale = {width:this.width(),height:this.height()};
     this.bounderies = this.bounds();
     return this;
   }
+
+  bounds(){
+    var minx=this.points[0].x, miny=this.points[0].y;
+    var maxx=this.points[0].x, maxy=this.points[0].y;
+    for(var i=0;i<this.points.length;i++){
+      if(this.points[i].x<minx) minx = this.points[i].x;
+      if(this.points[i].y<miny) miny = this.points[i].y;
+      if(this.points[i].x>maxx) maxx = this.points[i].x;
+      if(this.points[i].y>maxy) maxy = this.points[i].y;
+    }
+    return {top:miny,right:maxx,down:maxy,left:minx};
+  }
+
 
   /**
     * sets the origin of the polygon to the given position
