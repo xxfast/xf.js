@@ -19,6 +19,10 @@ class Polygon extends GameObject {
     this.rotation = 0;
   }
 
+  /**
+    * get the width as defined by points of the polygon
+    * @return {int} width - width as defined by the polygon
+    */
   width(){
     var max=this.points[0].x, min=this.points[0].x;
     for(var i=0;i<this.points.length;i++){
@@ -28,6 +32,10 @@ class Polygon extends GameObject {
     return max-min;
   }
 
+  /**
+    * get the height as defined by points of the polygon
+    * @return {int} height - height as defined by the polygon
+    */
   height(){
     var max=this.points[0].y, min=this.points[0].y;
     for(var i=0;i<this.points.length;i++){
@@ -37,18 +45,8 @@ class Polygon extends GameObject {
     return max-min;
   }
 
-
   /**
-    * moves the polygon to the given position
-    * @param {int} x - x position to move.
-    * @param {int} y - y position to move.
-  */
-  translate(x,y){
-    this.position = {x:x,y:y};
-    return this;
-  }
-
-  /**
+    * @override
     * transform the  polygon to the given scale
     * @param {int} width - desired width.
     * @param {int} height - desired height.
@@ -70,6 +68,7 @@ class Polygon extends GameObject {
   }
 
   /**
+    * @override
     * calculate the bounds object of the this polygon
     * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
   */
@@ -87,6 +86,7 @@ class Polygon extends GameObject {
 
 
   /**
+    * @override
     * sets the origin of the polygon to the given position
     * if called without parameters, it defaults to center of the object
     * @param {int} [x=width/2] - desired center in the x-cordinate.
