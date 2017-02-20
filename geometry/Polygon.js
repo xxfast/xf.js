@@ -17,6 +17,9 @@ class Polygon extends GameObject {
     this.bounderies = this.bounds();
     this.color = color;
     this.rotation = 0;
+    //debug
+    this.debug.drawBounds = false;
+    this.debug.drawCenter = false;
   }
 
   /**
