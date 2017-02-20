@@ -119,7 +119,6 @@ class Polygon extends GameObject {
     this.bounderies = this.bounds();
     return this;
   }
-
   /**
     * @override
     * updates the sprite once

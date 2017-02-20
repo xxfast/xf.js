@@ -21,7 +21,7 @@ class Sprite extends GameObject{
     this.fpt = 1;
     this.bounderies = this.bounds();
     //debug
-    this.debug.drawCollisionMask = false;
+    this.debug.drawCollisionMask = true;
     this.debug.drawBounds = false;
     this.debug.drawCenter = false;
     this.debug.drawContainer = false;
@@ -371,16 +371,14 @@ class Sprite extends GameObject{
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
     var rxoffset = (Math.cos(camera.rotation+this.rotation));
     var ryoffset = (Math.sin(camera.rotation+this.rotation));
-    //alert(Math.cos(camera.rotation+this.rotation));
-    // console.log({rx: rxoffset,ry:ryoffset});
     var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
     var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
     var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
     var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
     c.save();
-    c.translate(((this.position.x+this.origin.x-camera.position.x)/camera.scale.width)*camera.target.canvas.width, this.position.y+this.origin.y-camera.position.y);
-    c.rotate(-(this.rotation + camera.rotation) * Math.PI/180);
-    c.translate(-this.position.x-this.origin.x+camera.position.x, -this.position.y-this.origin.y+camera.position.y);
+    c.translate(((this.position.x+this.origin.x-camera.position.x)/camera.scale.width)*camera.target.canvas.width, ((this.position.y+this.origin.y-camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    c.rotate(-(this.rotation) * Math.PI/180);
+    c.translate(((-this.position.x-this.origin.x+camera.position.x)/camera.scale.width)*camera.target.canvas.width, ((-this.position.y-this.origin.y+camera.position.y)/camera.scale.height)*camera.target.canvas.height);
     for(var i=0;i<this.state().layers.length;i++){
       var args = [this.state().layers[i]];
       if(this.state().hasOwnProperty('frame'))
@@ -397,7 +395,7 @@ class Sprite extends GameObject{
     }
     c.restore();
     if(this.debug){
-      if(this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
+      if(false && this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
       if(this.debug.drawCenter){
         c.strokeStyle="yellow";
         c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes

@@ -58,12 +58,19 @@ class Scene extends GameObject{
   render(c,camera=false){
     this.canvas = c.canvas;
     this.clear(c);
+    c.save();
+    // c.translate(((camera.position.x)/camera.scale.width)*camera.target.canvas.width,
+    //             ((camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    c.rotate(-(camera.rotation) * Math.PI/180);
+    // c.translate(((-camera.position.x)/camera.scale.width)*camera.target.canvas.width,
+    //             ((-camera.position.y)/camera.scale.height)*camera.target.canvas.height);
     for(var i=0; i<this.elements.length; i++){
       var s = this.elements[i];
       if(!camera || s.within(camera)){
         this.elements[i].render(c,camera || undefined);
       }
     }
+    c.rotate((camera.rotation) * Math.PI/180);
     if(this.debug.show){
         var i = 0;
         c.fillStyle="white";

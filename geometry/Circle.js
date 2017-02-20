@@ -1,10 +1,10 @@
 class Circle extends Polygon {
   constructor(color={fill:false,stroke:false},x=0,y=0,r=0,step=1) {
-    super(derives(x,y,r,step),color);
+    super(pathFromCircle(x,y,r,step),color);
   }
 }
 
-function derives(x,y,r,step){
+function pathFromCircle(x,y,r,step){
   var path = [];
   var theta=1;
   while(theta<360){

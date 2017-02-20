@@ -129,7 +129,7 @@
 
   static debug(obj){
     for(var propt in obj.debug){
-        obj.debug[propt] = ! obj[propt] ;
+        obj.debug[propt] = !obj[propt] ;
     }
   }
 }
