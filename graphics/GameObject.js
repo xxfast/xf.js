@@ -51,29 +51,37 @@
     return this;
   }
 
-  /*
-    * @abstract
-    * calculate the bounds object of the GameObject
-  */
-  bounds() { throw new Error('must be implemented by subclass!'); }
-
   /**
+    * calculate the bounds object of the this sprite
+    * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
+  */
+  bounds(){
+    this.points = [{x:0, y:0},{x:+this.scale.width, y:0},
+                   {x:+this.scale.width, y:+this.scale.height},{x:0, y:0+this.scale.height}];
+    var rads = -(this.rotation * Math.PI)/180;
+    for (var i=0;i < this.points.length;i++) {
+     var dx = this.points[i].x - this.origin.x;
+     var dy = this.points[i].y - this.origin.y;
+     this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
+     this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
+    }
+    var minx=this.points[0].x, miny=this.points[0].y;
+    var maxx=this.points[0].x, maxy=this.points[0].y;
+    for(var i=0;i<this.points.length;i++){
+      if(this.points[i].x<minx) minx = this.points[i].x;
+      if(this.points[i].y<miny) miny = this.points[i].y;
+      if(this.points[i].x>maxx) maxx = this.points[i].x;
+      if(this.points[i].y>maxy) maxy = this.points[i].y;
+    }
+    return {top:miny,right:maxx,down:maxy,left:minx};
+  }
+  /**
+    * @virtual
     * rotates the  object by given amount of degrees
     * @param {int} degree - amount of degrees to move.
   */
   rotate(degree=0){
     this.rotation = (!this.rotation)?degree:this.rotation+degree;
-    var rads = -(degree * Math.PI)/180;
-    this.points = [{x:0, y:0},
-                  {x:+this.scale.width, y:0},
-                  {x:+this.scale.width, y:+this.scale.height},
-                  {x:0, y:0+this.scale.height} ];
-    for (var i=0;i < this.points.length;i++) {
-      var dx = this.points[i].x - this.origin.x;
-      var dy = this.points[i].y - this.origin.y;
-      this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
-      this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
-    }
     this.bounderies = this.bounds();
     return this;
   }

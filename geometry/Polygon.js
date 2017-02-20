@@ -69,6 +69,10 @@ class Polygon extends GameObject {
     return this;
   }
 
+  /**
+    * calculate the bounds object of the this polygon
+    * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
+  */
   bounds(){
     var minx=this.points[0].x, miny=this.points[0].y;
     var maxx=this.points[0].x, maxy=this.points[0].y;
@@ -85,6 +89,8 @@ class Polygon extends GameObject {
   /**
     * sets the origin of the polygon to the given position
     * if called without parameters, it defaults to center of the object
+    * @param {int} [x=width/2] - desired center in the x-cordinate.
+    * @param {int} [y=height/2] - desired center in the y-cordinate.
   */
   center(x=(this.bounderies.left+this.bounderies.right)/2,y=(this.bounderies.top+this.bounderies.down)/2){
     this.origin = {x:x,y:y};
@@ -98,6 +104,7 @@ class Polygon extends GameObject {
     *   @returns {Polygon} this - the object itself.
   */
   rotate(degree=0){
+    super.rotate(degree);
     var rads = -(degree * Math.PI)/180;
     for (var i=0;i < this.points.length;i++) {
       var dx = this.points[i].x - this.origin.x;
@@ -109,6 +116,15 @@ class Polygon extends GameObject {
     this.bounderies = this.bounds();
     return this;
   }
+
+  /**
+    * @override
+    * updates the sprite once
+  */
+  update(){
+
+  }
+
   /**
     * @override
     * renders the polygon on the given canvas,
@@ -120,9 +136,9 @@ class Polygon extends GameObject {
     c.fillStyle = this.color.fill;
     c.beginPath();
     for(var i=0;i<this.points.length;i++){
-      var xoffset =  ((this.position.x + this.points[i].x/camera.scale.width) * camera.target.canvas.width);
+      var xoffset =  (((this.position.x + this.points[i].x)/camera.scale.width) * camera.target.canvas.width);
       var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
-      var yoffset = ((this.position.y + this.points[i].y/camera.scale.height) * camera.target.canvas.height);
+      var yoffset = (((this.position.y + this.points[i].y)/camera.scale.height) * camera.target.canvas.height);
       var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
       if(i==0) c.moveTo(xoffset-xcoffset, yoffset-ycoffset);
       else c.lineTo(xoffset-xcoffset, yoffset-ycoffset);

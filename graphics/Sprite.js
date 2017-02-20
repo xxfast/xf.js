@@ -19,10 +19,12 @@ class Sprite extends GameObject{
     this.mass = 1;
     this.states = [];
     this.fpt = 1;
-    this.debug.drawCollisionMask = false;
-    this.debug.drawBounds = true;
-    this.debug.drawCenter = true;
     this.bounderies = this.bounds();
+    //debug
+    this.debug.drawCollisionMask = false;
+    this.debug.drawBounds = false;
+    this.debug.drawCenter = false;
+    this.debug.drawContainer = false;
   }
 
   /**
@@ -107,9 +109,9 @@ class Sprite extends GameObject{
       image.callback = this;
       image.onload = function(){
         if(this.callback.scale.width==0 && this.callback.scale.height==0){
-          this.callback.bounderies = this.callback.bounds();
           this.callback.transform(this.width, this.height);
        }
+       this.callback.bounderies = this.callback.bounds();
       }
       state.layers.push(image);
       this.states.push(state);
@@ -136,6 +138,7 @@ class Sprite extends GameObject{
       var image = new Image();
       image.src = urls[i];
       image.state = state;
+      image.callback = this;
       image.onload = function(){
         //frame width and height is decided from the base layer
         if(!this.state.fw) this.state.fw = this.width/this.state.nc;
@@ -145,6 +148,7 @@ class Sprite extends GameObject{
           	for(var c = 0; c < nc; c++)
           		state.cp.push({x:c*this.state.fw ,y:r*this.state.fh});
         }
+        this.callback.bounderies = this.callback.bounds();
       }
       state.layers.push(image);
       if(!this.collider) this.collider = image;
@@ -210,30 +214,6 @@ class Sprite extends GameObject{
     return this;
   }
 
-  /**
-    * calculate the bounds object of the this sprite
-    * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
-  */
-  bounds(){
-    this.points = [{x:0, y:0},{x:+this.scale.width, y:0},
-                   {x:+this.scale.width, y:+this.scale.height},{x:0, y:0+this.scale.height}];
-    var rads = -(this.rotation * Math.PI)/180;
-    for (var i=0;i < this.points.length;i++) {
-     var dx = this.points[i].x - this.origin.x;
-     var dy = this.points[i].y - this.origin.y;
-     this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
-     this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
-    }
-    var minx=this.points[0].x, miny=this.points[0].y;
-    var maxx=this.points[0].x, maxy=this.points[0].y;
-    for(var i=0;i<this.points.length;i++){
-      if(this.points[i].x<minx) minx = this.points[i].x;
-      if(this.points[i].y<miny) miny = this.points[i].y;
-      if(this.points[i].x>maxx) maxx = this.points[i].x;
-      if(this.points[i].y>maxy) maxy = this.points[i].y;
-    }
-    return {top:miny,right:maxx,down:maxy,left:minx};
-  }
 
   /**
     * sets the collision mask of the sprite
@@ -390,9 +370,9 @@ class Sprite extends GameObject{
   */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
     c.save();
-    c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
+    c.translate(this.position.x+this.origin.x-camera.position.x, this.position.y+this.origin.y-camera.position.y);
     c.rotate(-(this.rotation + camera.rotation) * Math.PI/180);
-    c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
+    c.translate(-this.position.x-this.origin.x+camera.position.x, -this.position.y-this.origin.y+camera.position.y);
     for(var i=0;i<this.state().layers.length;i++){
       var args = [this.state().layers[i]];
       if(this.state().hasOwnProperty('frame'))
@@ -400,8 +380,8 @@ class Sprite extends GameObject{
                   (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell
                   this.state().fw,  // width of sprite cell
                   this.state().fh); // height of sprite cell
-      var rxoffset = (Math.cos(camera.rotation+this.rotation) + (this.position.x- camera.position.x));
-      var ryoffset = (Math.sin(camera.rotation+this.rotation) + (this.position.y- camera.position.y));
+      var rxoffset = (Math.cos(camera.rotation+this.rotation));
+      var ryoffset = (Math.sin(camera.rotation+this.rotation));
       //alert(Math.cos(camera.rotation+this.rotation));
       // console.log({rx: rxoffset,ry:ryoffset});
       var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
@@ -417,13 +397,24 @@ class Sprite extends GameObject{
     }
     c.restore();
     if(this.debug){
-      c.strokeStyle="red";
       if(this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
-      this.bounderies = this.bounds();
-      if(this.debug.drawBounds) c.strokeRect(this.position.x+this.bounderies.left, this.position.y+this.bounderies.top, this.bounderies.right-this.bounderies.left, this.bounderies.down-this.bounderies.top); // draw the bounding boxes
       if(this.debug.drawCenter){
         c.strokeStyle="yellow";
         c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes
+      }
+      if(this.debug.drawContainer){
+        c.strokeStyle="green";
+        c.beginPath();
+        c.moveTo(this.position.x+this.points[0].x,this.position.y+this.points[0].y);
+        for(var i=0;i<this.points.length;i++){
+          c.lineTo(this.position.x+this.points[i].x,this.position.y+this.points[i].y);
+        }
+        c.closePath();
+        c.stroke();
+      }
+      if(this.debug.drawBounds){
+        c.strokeStyle="red";
+        c.strokeRect(this.position.x+this.bounderies.left, this.position.y+this.bounderies.top, this.bounderies.right-this.bounderies.left, this.bounderies.down-this.bounderies.top); // draw the bounding boxes
       }
     }
   }
