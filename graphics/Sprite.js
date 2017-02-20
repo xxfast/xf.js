@@ -378,7 +378,7 @@ class Sprite extends GameObject{
     var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
     var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
     c.save();
-    c.translate(this.position.x+this.origin.x-camera.position.x, this.position.y+this.origin.y-camera.position.y);
+    c.translate(((this.position.x+this.origin.x-camera.position.x)/camera.scale.width)*camera.target.canvas.width, this.position.y+this.origin.y-camera.position.y);
     c.rotate(-(this.rotation + camera.rotation) * Math.PI/180);
     c.translate(-this.position.x-this.origin.x+camera.position.x, -this.position.y-this.origin.y+camera.position.y);
     for(var i=0;i<this.state().layers.length;i++){

@@ -125,7 +125,6 @@ class Polygon extends GameObject {
     * updates the sprite once
   */
   update(){
-
   }
 
   /**
@@ -136,7 +135,6 @@ class Polygon extends GameObject {
     *   @param {Camera} camera - the camera to look at the polygon from.
   */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
-    c.fillStyle = this.color.fill;
     c.beginPath();
     for(var i=0;i<this.points.length;i++){
       var xoffset =  (((this.position.x + this.points[i].x)/camera.scale.width) * camera.target.canvas.width);
@@ -147,9 +145,10 @@ class Polygon extends GameObject {
       else c.lineTo(xoffset-xcoffset, yoffset-ycoffset);
     }
     c.closePath();
-    c.fill();
+    c.fillStyle = this.color.fill;
+    if (this.color.fill) c.fill();
     c.strokeStyle = this.color.stroke;
-    c.stroke();
+    if (this.color.stroke) c.stroke();
     if(this.debug){
       c.strokeStyle="red";
       if(this.debug.drawBounds) c.strokeRect(this.position.x+this.bounderies.left,this.position.y+this.bounderies.top,this.scale.width,this.scale.height); // draw the bounding boxes

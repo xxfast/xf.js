@@ -126,4 +126,10 @@
     * @param {int} c - the canvas to draw the GameObject on.
   */
   render(c) { throw new Error('must be implemented by subclass!'); }
+
+  static debug(obj){
+    for(var propt in obj.debug){
+        obj.debug[propt] = ! obj[propt] ;
+    }
+  }
 }
