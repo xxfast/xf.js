@@ -369,6 +369,14 @@ class Sprite extends GameObject{
     *   @param {Camera} camera - the camera to look at the sprite from.
   */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
+    var rxoffset = (Math.cos(camera.rotation+this.rotation));
+    var ryoffset = (Math.sin(camera.rotation+this.rotation));
+    //alert(Math.cos(camera.rotation+this.rotation));
+    // console.log({rx: rxoffset,ry:ryoffset});
+    var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
+    var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
+    var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
+    var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
     c.save();
     c.translate(this.position.x+this.origin.x-camera.position.x, this.position.y+this.origin.y-camera.position.y);
     c.rotate(-(this.rotation + camera.rotation) * Math.PI/180);
@@ -380,14 +388,6 @@ class Sprite extends GameObject{
                   (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell
                   this.state().fw,  // width of sprite cell
                   this.state().fh); // height of sprite cell
-      var rxoffset = (Math.cos(camera.rotation+this.rotation));
-      var ryoffset = (Math.sin(camera.rotation+this.rotation));
-      //alert(Math.cos(camera.rotation+this.rotation));
-      // console.log({rx: rxoffset,ry:ryoffset});
-      var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
-      var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
-      var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
-      var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
       args.push( xoffset - xcoffset, // x position to render
                  yoffset - ycoffset, // y position to render
                 (this.scale.width/camera.scale.width)* camera.target.canvas.width, // height to render
