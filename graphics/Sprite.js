@@ -397,22 +397,27 @@ class Sprite extends GameObject{
     if(this.debug){
       if(false && this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
       if(this.debug.drawCenter){
-        c.strokeStyle="yellow";
-        c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes
+        c.fillStyle="yellow";
+        c.fillRect((xoffset - xcoffset) + this.origin.x - 2, (yoffset - ycoffset)+ this.origin.y - 2, 4,4 ); // draw the bounding boxes
       }
       if(this.debug.drawContainer){
         c.strokeStyle="green";
         c.beginPath();
-        c.moveTo(this.position.x+this.points[0].x,this.position.y+this.points[0].y);
+        c.moveTo(((xoffset + this.points[0].x - xcoffset)/camera.scale.width)* camera.target.canvas.width,
+                 ((yoffset + this.points[0].y - ycoffset)/camera.scale.height)* camera.target.canvas.height);
         for(var i=0;i<this.points.length;i++){
-          c.lineTo(this.position.x+this.points[i].x,this.position.y+this.points[i].y);
+          c.lineTo(((xoffset + this.points[i].x - xcoffset)/camera.scale.width)* camera.target.canvas.width,
+                   ((yoffset + this.points[i].y - ycoffset)/camera.scale.height)* camera.target.canvas.height );
         }
         c.closePath();
         c.stroke();
       }
       if(this.debug.drawBounds){
         c.strokeStyle="red";
-        c.strokeRect(this.position.x+this.bounderies.left, this.position.y+this.bounderies.top, this.bounderies.right-this.bounderies.left, this.bounderies.down-this.bounderies.top); // draw the bounding boxes
+        c.strokeRect((xoffset - xcoffset)+this.bounderies.left,
+                     (yoffset - ycoffset)+this.bounderies.top,
+                     ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* camera.target.canvas.width,
+                     ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* camera.target.canvas.height); // draw the bounding boxes
       }
     }
   }

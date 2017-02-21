@@ -135,14 +135,17 @@ class Polygon extends GameObject {
   */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
     c.beginPath();
+    var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
+    var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
+    var xoffset, yoffset;
     for(var i=0;i<this.points.length;i++){
-      var xoffset =  (((this.position.x + this.points[i].x)/camera.scale.width) * camera.target.canvas.width);
-      var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
-      var yoffset = (((this.position.y + this.points[i].y)/camera.scale.height) * camera.target.canvas.height);
-      var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
+      xoffset =  (((this.position.x + this.points[i].x)/camera.scale.width) * camera.target.canvas.width);
+      yoffset = (((this.position.y + this.points[i].y)/camera.scale.height) * camera.target.canvas.height);
       if(i==0) c.moveTo(xoffset-xcoffset, yoffset-ycoffset);
       else c.lineTo(xoffset-xcoffset, yoffset-ycoffset);
     }
+    xoffset = ((this.position.x/camera.scale.width) * camera.target.canvas.width);
+    yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
     c.closePath();
     c.fillStyle = this.color.fill;
     if (this.color.fill) c.fill();
@@ -150,10 +153,11 @@ class Polygon extends GameObject {
     if (this.color.stroke) c.stroke();
     if(this.debug){
       c.strokeStyle="red";
-      if(this.debug.drawBounds) c.strokeRect(this.position.x+this.bounderies.left,this.position.y+this.bounderies.top,this.scale.width,this.scale.height); // draw the bounding boxes
+      if(this.debug.drawBounds)
+        c.strokeRect((xoffset-xcoffset)+this.bounderies.left,(yoffset-ycoffset)+this.bounderies.top,this.scale.width,this.scale.height); // draw the bounding boxes
       if(this.debug.drawCenter){
-        c.strokeStyle="yellow";
-        c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes
+        c.fillStyle="yellow";
+        c.fillRect((xoffset-xcoffset) + this.origin.x - 2, (yoffset-ycoffset) + this.origin.y - 2, 4,4 ); // draw the bounding boxes
       }
     }
   }
