@@ -19,9 +19,12 @@ class Sprite extends GameObject{
     this.mass = 1;
     this.states = [];
     this.fpt = 1;
-    this.debug.drawCollisionMask = false;
-    this.debug.drawBounds = true;
-    this.debug.drawCenter = true;
+    this.bounderies = this.bounds();
+    //debug
+    this.debug.drawCollisionMask = true;
+    this.debug.drawBounds = false;
+    this.debug.drawCenter = false;
+    this.debug.drawContainer = false;
   }
 
   /**
@@ -105,8 +108,10 @@ class Sprite extends GameObject{
       image.src = urls[i];
       image.callback = this;
       image.onload = function(){
-        if(this.callback.scale.width==0 && this.callback.scale.height==0 )
-         this.callback.transform(this.width, this.height);
+        if(this.callback.scale.width==0 && this.callback.scale.height==0){
+          this.callback.transform(this.width, this.height);
+       }
+       this.callback.bounderies = this.callback.bounds();
       }
       state.layers.push(image);
       this.states.push(state);
@@ -133,6 +138,7 @@ class Sprite extends GameObject{
       var image = new Image();
       image.src = urls[i];
       image.state = state;
+      image.callback = this;
       image.onload = function(){
         //frame width and height is decided from the base layer
         if(!this.state.fw) this.state.fw = this.width/this.state.nc;
@@ -142,6 +148,7 @@ class Sprite extends GameObject{
           	for(var c = 0; c < nc; c++)
           		state.cp.push({x:c*this.state.fw ,y:r*this.state.fh});
         }
+        this.callback.bounderies = this.callback.bounds();
       }
       state.layers.push(image);
       if(!this.collider) this.collider = image;
@@ -196,6 +203,19 @@ class Sprite extends GameObject{
   }
 
   /**
+    * @virtual
+    * transform the  object to the given scale
+    * @param {int} width - desired width.
+    * @param {int} height - desired height.
+  */
+  transform(width,height){
+    super.transform(width,height);
+    this.bounds();
+    return this;
+  }
+
+
+  /**
     * sets the collision mask of the sprite
     *   @param {string} mask - url of the mask to set.
     *   @returns {Sprite} itself
@@ -247,8 +267,6 @@ class Sprite extends GameObject{
       h = h * c + w * s ;
       w2 =  h2 * s + w2 * c;
       h2 = h2 * c + w2 * s ;
-
-      //console.log(w,h,w2,h2);
 
        w  = this.scale.width,
           h  = this.scale.height,
@@ -344,17 +362,23 @@ class Sprite extends GameObject{
   }
 
 
-    /*
-      * renders the sprite on the given canvas,
-      * and if a camera is provided, then as seen from given camera
-      *   @param {context} c - the canvas context to draw the sprite on.
-      *   @param {Camera} camera - the camera to look at the sprite from.
-    */
+  /*
+    * renders the sprite on the given canvas,
+    * and if a camera is provided, then as seen from given camera
+    *   @param {context} c - the canvas context to draw the sprite on.
+    *   @param {Camera} camera - the camera to look at the sprite from.
+  */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
+    var rxoffset = (Math.cos(camera.rotation+this.rotation));
+    var ryoffset = (Math.sin(camera.rotation+this.rotation));
+    var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
+    var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
+    var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
+    var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
     c.save();
-    c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
-    c.rotate(-(this.rotation + camera.rotation) * Math.PI/180);
-    c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
+    c.translate(((this.position.x+this.origin.x-camera.position.x)/camera.scale.width)*camera.target.canvas.width, ((this.position.y+this.origin.y-camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    c.rotate(-(this.rotation) * Math.PI/180);
+    c.translate(((-this.position.x-this.origin.x+camera.position.x)/camera.scale.width)*camera.target.canvas.width, ((-this.position.y-this.origin.y+camera.position.y)/camera.scale.height)*camera.target.canvas.height);
     for(var i=0;i<this.state().layers.length;i++){
       var args = [this.state().layers[i]];
       if(this.state().hasOwnProperty('frame'))
@@ -362,14 +386,6 @@ class Sprite extends GameObject{
                   (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell
                   this.state().fw,  // width of sprite cell
                   this.state().fh); // height of sprite cell
-      var rxoffset = (Math.cos(camera.rotation+this.rotation) + (this.position.x- camera.position.x));
-      var ryoffset = (Math.sin(camera.rotation+this.rotation) + (this.position.y- camera.position.y));
-      //alert(Math.cos(camera.rotation+this.rotation));
-      // console.log({rx: rxoffset,ry:ryoffset});
-      var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
-      var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
-      var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
-      var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
       args.push( xoffset - xcoffset, // x position to render
                  yoffset - ycoffset, // y position to render
                 (this.scale.width/camera.scale.width)* camera.target.canvas.width, // height to render
@@ -379,12 +395,33 @@ class Sprite extends GameObject{
     }
     c.restore();
     if(this.debug){
-      c.strokeStyle="red";
-      if(this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
-      if(this.debug.drawBounds) c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height ); // draw the bounding boxes
+      if(false && this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
       if(this.debug.drawCenter){
-        c.strokeStyle="yellow";
-        c.strokeRect(this.position.x + this.origin.x - 2, this.position.y + this.origin.y - 2, 4,4 ); // draw the bounding boxes
+        c.fillStyle="yellow";
+        var cpxoffset = (((this.position.x + this.origin.x - 2 )/camera.scale.width) * camera.target.canvas.width);
+        var cpyoffset = (((this.position.y + this.origin.y - 2)/camera.scale.height) * camera.target.canvas.height);
+        c.fillRect((cpxoffset - xcoffset) , (cpyoffset - ycoffset), 4,4 ); // draw the bounding boxes
+      }
+      if(this.debug.drawContainer){
+        c.strokeStyle="green";
+        c.beginPath();
+        var xpoffset = ((this.position.x + this.points[0].x)/camera.scale.width)* camera.target.canvas.width;
+        var ypoffset = ((this.position.y + this.points[0].y)/camera.scale.height)* camera.target.canvas.height;
+        c.moveTo( xpoffset - xcoffset, ypoffset - ycoffset);
+        for(var i=0;i<this.points.length;i++){
+          xpoffset = ((this.position.x + this.points[i].x)/camera.scale.width)* camera.target.canvas.width;
+          ypoffset = ((this.position.y + this.points[i].y)/camera.scale.height)* camera.target.canvas.height;
+          c.lineTo( xpoffset - xcoffset, ypoffset - ycoffset);
+        }
+        c.closePath();
+        c.stroke();
+      }
+      if(this.debug.drawBounds){
+        c.strokeStyle="red";
+        c.strokeRect((xoffset - xcoffset)+this.bounderies.left,
+                     (yoffset - ycoffset)+this.bounderies.top,
+                     ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* camera.target.canvas.width,
+                     ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* camera.target.canvas.height); // draw the bounding boxes
       }
     }
   }
