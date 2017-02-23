@@ -51,4 +51,23 @@ class Camera extends GameObject{
     var renderData = cc.getImageData(this.position.x, this.position.y, this.scale.width, this.scale.height);
     cc.putImageData(renderData,0,0);
   }
+
+  /**
+    * converts camera relative position to absolute position
+    * @param {x:y:} relative - position witin the camera.
+    *  @return {x:y:} absolute - absolute position
+  */
+  absolute(relative){
+    return {x:this.position.x+relative.x,y:this.position.y.relative.y};
+  }
+
+  /**
+    * converts camera relative position to absolute position
+    * @param {x:y:} relative - position witin the camera.
+    *  @return {x:y:} absolute - absolute position
+  */
+  relative(absolute){
+    return {x:absolute.x-this.position.x,y:absolute.y-this.position.y};
+  }
+
 }
