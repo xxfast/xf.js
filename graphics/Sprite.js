@@ -398,16 +398,20 @@ class Sprite extends GameObject{
       if(false && this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
       if(this.debug.drawCenter){
         c.fillStyle="yellow";
-        c.fillRect((xoffset - xcoffset) + this.origin.x - 2, (yoffset - ycoffset)+ this.origin.y - 2, 4,4 ); // draw the bounding boxes
+        var cpxoffset = (((this.position.x + this.origin.x - 2 )/camera.scale.width) * camera.target.canvas.width);
+        var cpyoffset = (((this.position.y + this.origin.y - 2)/camera.scale.height) * camera.target.canvas.height);
+        c.fillRect((cpxoffset - xcoffset) , (cpyoffset - ycoffset), 4,4 ); // draw the bounding boxes
       }
       if(this.debug.drawContainer){
         c.strokeStyle="green";
         c.beginPath();
-        c.moveTo(((xoffset + this.points[0].x - xcoffset)/camera.scale.width)* camera.target.canvas.width,
-                 ((yoffset + this.points[0].y - ycoffset)/camera.scale.height)* camera.target.canvas.height);
+        var xpoffset = ((this.position.x + this.points[0].x)/camera.scale.width)* camera.target.canvas.width;
+        var ypoffset = ((this.position.y + this.points[0].y)/camera.scale.height)* camera.target.canvas.height;
+        c.moveTo( xpoffset - xcoffset, ypoffset - ycoffset);
         for(var i=0;i<this.points.length;i++){
-          c.lineTo(((xoffset + this.points[i].x - xcoffset)/camera.scale.width)* camera.target.canvas.width,
-                   ((yoffset + this.points[i].y - ycoffset)/camera.scale.height)* camera.target.canvas.height );
+          xpoffset = ((this.position.x + this.points[i].x)/camera.scale.width)* camera.target.canvas.width;
+          ypoffset = ((this.position.y + this.points[i].y)/camera.scale.height)* camera.target.canvas.height;
+          c.lineTo( xpoffset - xcoffset, ypoffset - ycoffset);
         }
         c.closePath();
         c.stroke();
