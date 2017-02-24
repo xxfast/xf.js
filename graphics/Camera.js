@@ -12,9 +12,10 @@ class Camera extends GameObject{
     * @param {int} [w=0] - desired width.
     * @param {int} [h=0] - desired height.
     */
-  constructor(id,target,x,y,w,h) {
-    super(id,target,x,y,w,h);
-    this.target = target;
+  constructor(id,scene,x,y,w,h) {
+    super(id,x,y,w,h);
+    this.target = {scene:scene,object:false};
+    this.options = {contained:true};
   }
 
   /**
@@ -23,25 +24,18 @@ class Camera extends GameObject{
     *   @returns {Camera} itself
     */
   targets(scene){
-    this.target = scene;
+    this.target.scene = scene;
     return this;
   }
 
   /**
-    * renders the camera itself
-    * @param {context} c - the canvas to draw the camera on.
-  */
-  render(c){
-    c.save();
-    c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
-    c.rotate(-this.rotation * Math.PI/180);
-    c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
-    c.strokeStyle="black";
-    c.font="12px Verdana";
-    c.fillStyle = "black"
-    c.fillText(this.id,this.position.x, this.position.y- 5);
-    c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height );
-    c.restore();
+    * camera tracks the given object
+    * @param {GameObject} object - the object the camera starts tracking.
+    *   @returns {Camera} itself
+    */
+  tracks(object){
+    this.target.object = object;
+    return this;
   }
 
   /*
@@ -70,5 +64,33 @@ class Camera extends GameObject{
   relative(absolute){
     return {x:absolute.x-this.position.x,y:absolute.y-this.position.y};
   }
+
+  /**
+    * updates the camera just once
+  */
+  update(){
+    if(this.target.object){
+      this.translate(this.target.object.position.x + this.target.object.origin.x  - this.origin.x ,
+                     this.target.object.position.y + this.target.object.origin.y - this.origin.y);
+    }
+  }
+
+  /**
+    * renders the camera itself
+    * @param {context} c - the canvas to draw the camera on.
+  */
+  render(c){
+    c.save();
+    c.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
+    c.rotate(-this.rotation * Math.PI/180);
+    c.translate(-this.position.x-this.origin.x, -this.position.y-this.origin.y);
+    c.strokeStyle="black";
+    c.font="12px Verdana";
+    c.fillStyle = "black"
+    c.fillText(this.id,this.position.x, this.position.y- 5);
+    c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height );
+    c.restore();
+  }
+
 
 }

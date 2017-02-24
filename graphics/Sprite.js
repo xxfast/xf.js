@@ -371,16 +371,18 @@ class Sprite extends GameObject{
     *   @param {Camera} camera - the camera to look at the sprite from.
   */
   render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
+    var cwidth = camera.target.scene.canvas.width;
+    var cheight = camera.target.scene.canvas.height;
     var rxoffset = (Math.cos(camera.rotation+this.rotation));
     var ryoffset = (Math.sin(camera.rotation+this.rotation));
-    var xoffset =  ((this.position.x/camera.scale.width) * camera.target.canvas.width); //- (this.position.x/ Math.cos(camera.rotation));
-    var xcoffset = ((camera.position.x/camera.scale.width) * camera.target.canvas.width);
-    var yoffset = ((this.position.y/camera.scale.height) * camera.target.canvas.height);
-    var ycoffset = ((camera.position.y/camera.scale.height)* camera.target.canvas.height);
+    var xoffset =  ((this.position.x/camera.scale.width) * cwidth);
+    var xcoffset = ((camera.position.x/camera.scale.width) * cwidth);
+    var yoffset = ((this.position.y/camera.scale.height) * cheight);
+    var ycoffset = ((camera.position.y/camera.scale.height)* cheight);
     c.save();
-    c.translate(((this.position.x+this.origin.x-camera.position.x)/camera.scale.width)*camera.target.canvas.width, ((this.position.y+this.origin.y-camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    c.translate(((this.position.x+this.origin.x-camera.position.x)/camera.scale.width)*cwidth, ((this.position.y+this.origin.y-camera.position.y)/camera.scale.height)*cheight);
     c.rotate(-(this.rotation) * Math.PI/180);
-    c.translate(((-this.position.x-this.origin.x+camera.position.x)/camera.scale.width)*camera.target.canvas.width, ((-this.position.y-this.origin.y+camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    c.translate(((-this.position.x-this.origin.x+camera.position.x)/camera.scale.width)*cwidth, ((-this.position.y-this.origin.y+camera.position.y)/camera.scale.height)*cheight);
     for(var i=0;i<this.state().layers.length;i++){
       var args = [this.state().layers[i]];
       if(this.state().hasOwnProperty('frame'))
@@ -390,8 +392,8 @@ class Sprite extends GameObject{
                   this.state().fh); // height of sprite cell
       args.push( xoffset - xcoffset, // x position to render
                  yoffset - ycoffset, // y position to render
-                (this.scale.width/camera.scale.width)* camera.target.canvas.width, // height to render
-                (this.scale.height/camera.scale.height)* camera.target.canvas.height); // width to render
+                (this.scale.width/camera.scale.width)* cwidth, // height to render
+                (this.scale.height/camera.scale.height)* cheight); // width to render
       c.drawImage(...args);
 
     }
@@ -400,19 +402,19 @@ class Sprite extends GameObject{
       if(false && this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
       if(this.debug.drawCenter){
         c.fillStyle="yellow";
-        var cpxoffset = (((this.position.x + this.origin.x - 2 )/camera.scale.width) * camera.target.canvas.width);
-        var cpyoffset = (((this.position.y + this.origin.y - 2)/camera.scale.height) * camera.target.canvas.height);
+        var cpxoffset = (((this.position.x + this.origin.x - 2 )/camera.scale.width) * cwidth);
+        var cpyoffset = (((this.position.y + this.origin.y - 2)/camera.scale.height) * cheight);
         c.fillRect((cpxoffset - xcoffset) , (cpyoffset - ycoffset), 4,4 ); // draw the bounding boxes
       }
       if(this.debug.drawContainer){
         c.strokeStyle="green";
         c.beginPath();
-        var xpoffset = ((this.position.x + this.points[0].x)/camera.scale.width)* camera.target.canvas.width;
-        var ypoffset = ((this.position.y + this.points[0].y)/camera.scale.height)* camera.target.canvas.height;
+        var xpoffset = ((this.position.x + this.points[0].x)/camera.scale.width)* cwidth;
+        var ypoffset = ((this.position.y + this.points[0].y)/camera.scale.height)* cheight;
         c.moveTo( xpoffset - xcoffset, ypoffset - ycoffset);
         for(var i=0;i<this.points.length;i++){
-          xpoffset = ((this.position.x + this.points[i].x)/camera.scale.width)* camera.target.canvas.width;
-          ypoffset = ((this.position.y + this.points[i].y)/camera.scale.height)* camera.target.canvas.height;
+          xpoffset = ((this.position.x + this.points[i].x)/camera.scale.width)* cwidth;
+          ypoffset = ((this.position.y + this.points[i].y)/camera.scale.height)* cheight;
           c.lineTo( xpoffset - xcoffset, ypoffset - ycoffset);
         }
         c.closePath();
@@ -422,8 +424,8 @@ class Sprite extends GameObject{
         c.strokeStyle="red";
         c.strokeRect((xoffset - xcoffset)+this.bounderies.left,
                      (yoffset - ycoffset)+this.bounderies.top,
-                     ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* camera.target.canvas.width,
-                     ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* camera.target.canvas.height); // draw the bounding boxes
+                     ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* cwidth,
+                     ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* cheight); // draw the bounding boxes
       }
     }
   }
