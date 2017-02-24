@@ -18,6 +18,7 @@ class Sprite extends GameObject{
     this.acceleration = {x:0,y:0};
     this.mass = 1;
     this.states = [];
+    this.current= 0;
     this.fpt = 1;
     this.bounderies = this.bounds();
     //debug
@@ -46,7 +47,9 @@ class Sprite extends GameObject{
     * returns the current state the sprite is in
     *   @returns {state} current state
   */
-  state() { return this.states[0]; }
+  state() {
+    return this.states[this.current];
+  }
 
   /**
     * set the current state of the animation
@@ -54,10 +57,9 @@ class Sprite extends GameObject{
     *   @returns {Sprite} itself
   */
   goto(id){
-    if(this.states.length==1) return this;
-    for(var i=0; i<this.states.length; i++){
+    for(var i=0;i<this.states.length;i++){
       if(this.states[i].id==id){
-        this.states.unshift(this.states.splice(i,1));
+        this.current = i;
         break;
       }
     }
