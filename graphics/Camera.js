@@ -38,6 +38,26 @@ class Camera extends GameObject{
     return this;
   }
 
+  /**
+    * camera zooms in to, and keeps the constain ratio if enabled
+    * @param {int} amount - amount to zoom in on.
+    * @param {bool} keepRatio - should the camera keep constent ratio while zooming.
+    *   @returns {Camera} itself
+    */
+  zoom(amount, keepRatio=true){
+    var owidth = this.scale.width, oheight = this.scale.height;
+    var ratio = this.scale.width / this.scale.height;
+    for(var i=0;i<Math.abs(amount);i++) {
+      this.scale.width = this.scale.width - Math.sign(amount);
+      this.scale.height =  (keepRatio)?(this.scale.width/ratio) : this.scale.height- Math.sign(amount);
+    }
+    //recentering the origin ? shouldn't this be done by parent?
+    this.origin.x = (this.origin.x / owidth) * this.scale.width;
+    this.origin.y = (this.origin.y / oheight) * this.scale.height;
+    return this;
+  }
+
+
   /*
     * renders the containts within tha camera to the given canvas
     * @param {context} c - the canvas to draw the camera on.
@@ -89,6 +109,8 @@ class Camera extends GameObject{
     c.fillStyle = "black"
     c.fillText(this.id,this.position.x, this.position.y- 5);
     c.strokeRect(this.position.x, this.position.y, this.scale.width, this.scale.height );
+    c.fillStyle="yellow";
+    c.fillRect(this.position.x+this.origin.x-2, this.position.y+this.origin.y-2,4,4);
     c.restore();
   }
 
