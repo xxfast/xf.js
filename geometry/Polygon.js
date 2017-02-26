@@ -133,7 +133,7 @@ class Polygon extends GameObject {
     *   @param {context} c - the canvas context to draw the polygon on.
     *   @param {Camera} camera - the camera to look at the polygon from.
   */
-  render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{canvas:{width:1,height:1}}}){
+  render(c,camera={position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}){
     var cwidth = camera.target.scene.canvas.width;
     var cheight = camera.target.scene.canvas.height;
     var cwratio =  camera.target.scene.canvas.width/camera.scale.width ;

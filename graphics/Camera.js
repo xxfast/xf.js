@@ -73,7 +73,10 @@ class Camera extends GameObject{
     *  @return {x:y:} absolute - absolute position
   */
   absolute(relative){
-    return {x:this.position.x+relative.x,y:this.position.y.relative.y};
+    var xratio = this.target.scene.canvas.width / this.scale.width;
+    var yratio = this.target.scene.canvas.height / this.scale.height;
+    return {x:(this.position.x+(relative.x/xratio)) ,
+            y:(this.position.y+(relative.y/yratio))};
   }
 
   /**

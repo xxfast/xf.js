@@ -55,15 +55,17 @@ class Scene extends GameObject{
     * @param {context} c - the canvas to draw the scene on.
     * @param {Camera} [camera=false] - the camera to look at the scene from.
   */
-  render(c,camera=false){
+  render(c,camera=false){ // {position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}
     this.canvas = c.canvas;
     this.clear(c);
     c.save();
-    // c.translate(((camera.position.x)/camera.scale.width)*camera.target.canvas.width,
-    //             ((camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    //c.translate(-camera.position.x + camera.origin.x, -camera.position.y + camera.origin.y);
+    // c.translate(((camera.position.x)/camera.scale.width)*camera.target.scene.canvas.width,
+    //              ((camera.position.y)/camera.scale.height)*camera.target.scene.canvas.height);
     c.rotate(-(camera.rotation) * Math.PI/180);
-    // c.translate(((-camera.position.x)/camera.scale.width)*camera.target.canvas.width,
-    //             ((-camera.position.y)/camera.scale.height)*camera.target.canvas.height);
+    // c.translate(((-camera.position.x)/camera.scale.width)*camera.target.scene.canvas.width,
+    //              ((-camera.position.y)/camera.scale.height)*camera.target.scene.canvas.height);
+    //c.translate(camera.position.x - camera.origin.x, camera.position.y - camera.origin.y);
     for(var i=0; i<this.elements.length; i++){
       var s = this.elements[i];
       if(!camera || s.within(camera)){
