@@ -14,18 +14,27 @@ class Sprite extends GameObject{
     */
   constructor(id,x,y,w,h) {
     super(id,x,y,w,h);
-    this.speed = {x:0,y:0};
-    this.acceleration = {x:0,y:0};
-    this.mass = 1;
-    this.states = [];
-    this.current= 0;
-    this.fpt = 1;
-    this.bounderies = this.bounds();
-    //debug
-    this.debug.drawCollisionMask = true;
-    this.debug.drawBounds = false;
-    this.debug.drawCenter = false;
-    this.debug.drawContainer = false;
+    /* physics */
+    {
+      this.speed = {x:0,y:0};
+      this.acceleration = {x:0,y:0};
+      this.mass = 1;
+      this.bounderies = this.bounds();
+      this.collider = null;
+    };
+    /* time controls */
+    {
+      this.states = [];
+      this.current= 0;
+      this.fpt = 1;
+    };
+    /* debug */
+    {
+      this.debug.drawCollisionMask = false;
+      this.debug.drawBounds = false;
+      this.debug.drawCenter = false;
+      this.debug.drawContainer = false;
+    };
   }
 
   /**
@@ -104,22 +113,22 @@ class Sprite extends GameObject{
     *   @returns {Sprite} itself
   */
   source(urls){
-    var state = { id:"default", layers:[] };
-    for(var i=0;i<urls.length;i++){
-      var image = new Image();
-      image.src = urls[i];
-      image.callback = this;
-      image.onload = function(){
-        if(this.callback.scale.width==0 && this.callback.scale.height==0){
-          this.callback.transform(this.width, this.height);
-       }
-       this.callback.bounderies = this.callback.bounds();
-      }
-      state.layers.push(image);
-      this.states.push(state);
-      if(!this.collider) this.collider = image;
-    }
-    return this;
+    // var state = { id:"default", layers:[] };
+    // for(var i=0;i<urls.length;i++){
+    //   var image = new Image();
+    //   image.src = urls[i];
+    //   image.callback = this;
+    //   image.onload = function(){
+    //     if(this.callback.scale.width==0 && this.callback.scale.height==0){
+    //       this.callback.transform(this.width, this.height);
+    //    }
+    //    this.callback.bounderies = this.callback.bounds();
+    //   }
+    //   state.layers.push(image);
+    //   this.states.push(state);
+    //   if(!this.collider) this.collider = image;
+    // }
+    return this.animate("default",urls,1,1,1,1,0);
   }
 
   /**
@@ -135,14 +144,15 @@ class Sprite extends GameObject{
   *   @returns {Sprite} itself
   */
   animate(name, urls, nr, nc, nf, sf, repeat){
-    var state = { id:name,frame:sf,layers:[], nr:nr, nc:nc, nf:nf, fw:0,fh:0,repeat:repeat,cp:[]};
+    var state = { id:name,frame:sf,layers:[], nr:nr, nc:nc, nf:nf, fw:0,fh:0,repeat:repeat,cp:[], collider:null};
     for(var i=0;i<urls.length;i++){
       var image = new Image();
       image.src = urls[i];
       image.state = state;
       image.callback = this;
+      image.state = state;
       image.onload = function(){
-        //frame width and height is decided from the base layer
+        //frame width, height, and clipping points is decided from the base layer
         if(!this.state.fw) this.state.fw = this.width/this.state.nc;
         if(!this.state.fh) this.state.fh = this.height/this.state.nr;
         if(this.state.cp.length==0){
@@ -151,11 +161,17 @@ class Sprite extends GameObject{
           		state.cp.push({x:c*this.state.fw ,y:r*this.state.fh});
         }
         this.callback.bounderies = this.callback.bounds();
+        //by default, the collider for the state will be the base layer
+        if(!this.state.collider) this.state.collider = this;
+        //by default, if no scale is provided, scale will be set to base layers dimentions.
+        if(this.callback.scale.width==0 && this.callback.scale.height==0){
+          this.callback.transform(this.width, this.height);
+        }
       }
       state.layers.push(image);
-      if(!this.collider) this.collider = image;
     }
     this.states.push(state);
+    this.goto(name);
     return this;
   }
 
@@ -216,16 +232,16 @@ class Sprite extends GameObject{
     return this;
   }
 
-
   /**
-    * sets the collision mask of the sprite
-    *   @param {string} mask - url of the mask to set.
+    * sets the custom collision mask for the current, or provided state of the sprite
+    * @param {String} mask - url of the mask to set.
+    * @param {State} state - the state of which the collider applies to.
     *   @returns {Sprite} itself
   */
-  collideon(mask){
+  collideon(mask,state=this.state()){
     var image = new Image();
     image.src = mask;
-    this.collider = image;
+    state.collider = image;
     return this;
   }
 
@@ -236,7 +252,7 @@ class Sprite extends GameObject{
   getCollisionMask(){
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    var img = this.collider;
+    var img = this.state().collider;
     //context.save();
     //context.translate(this.position.x+this.origin.x,this.position.y+this.origin.y);
     //context.rotate(-this.rotation * Math.PI/180);
@@ -395,11 +411,9 @@ class Sprite extends GameObject{
                 (this.scale.width/camera.scale.width)* cwidth, // height to render
                 (this.scale.height/camera.scale.height)* cheight); // width to render
       c.drawImage(...args);
-
     }
     c.restore();
-    if(this.debug){
-      if(false && this.debug.drawCollisionMask && this.collider) c.drawImage(this.collider,this.position.x,this.position.y,this.scale.width,this.scale.height); // draw collition image
+    if(this.debug.enabled){
       if(this.debug.drawCenter){
         c.fillStyle="yellow";
         var cpxoffset = (((this.position.x + this.origin.x - 2 )/camera.scale.width) * cwidth);
@@ -426,6 +440,23 @@ class Sprite extends GameObject{
                      (yoffset - ycoffset)+this.bounderies.top,
                      ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* cwidth,
                      ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* cheight); // draw the bounding boxes
+      }
+      if(this.debug.drawCollisionMask && this.state().collider){
+          // c.drawImage(this.state().collider,(xoffset - xcoffset)+this.bounderies.left,
+          //            (yoffset - ycoffset)+this.bounderies.top,
+          //            ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* cwidth,
+          //            ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* cheight); // draw collition image
+         var args = [this.state().collider];
+         if(this.state().hasOwnProperty('frame'))
+           args.push((this.state().cp[Math.round(this.state().frame)] || {x:0}).x, // clipping x position of sprite cell
+                     (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell
+                     this.state().fw,  // width of sprite cell
+                     this.state().fh); // height of sprite cell
+         args.push( xoffset - xcoffset, // x position to render
+                    yoffset - ycoffset, // y position to render
+                   (this.scale.width/camera.scale.width)* cwidth, // height to render
+                   (this.scale.height/camera.scale.height)* cheight); // width to render
+         c.drawImage(...args);
       }
     }
   }

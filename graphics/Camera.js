@@ -48,7 +48,7 @@ class Camera extends GameObject{
     var owidth = this.scale.width, oheight = this.scale.height;
     var ratio = this.scale.width / this.scale.height;
     for(var i=0;i<Math.abs(amount);i++) {
-      this.scale.width = this.scale.width - Math.sign(amount);
+      this.scale.width = this.scale.width - (Math.sign(amount) * Math.abs(amount));
       this.scale.height =  (keepRatio)?(this.scale.width/ratio) : this.scale.height- Math.sign(amount);
     }
     //recentering the origin ? shouldn't this be done by parent?
