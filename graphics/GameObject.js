@@ -19,7 +19,7 @@
       this.rotation = 0;
       this.points = [];
       this.bounderies = {};
-      this.debug = {};
+      this.debug = {enabled:false};
   }
 
   /**
