@@ -113,21 +113,6 @@ class Sprite extends GameObject{
     *   @returns {Sprite} itself
   */
   source(urls){
-    // var state = { id:"default", layers:[] };
-    // for(var i=0;i<urls.length;i++){
-    //   var image = new Image();
-    //   image.src = urls[i];
-    //   image.callback = this;
-    //   image.onload = function(){
-    //     if(this.callback.scale.width==0 && this.callback.scale.height==0){
-    //       this.callback.transform(this.width, this.height);
-    //    }
-    //    this.callback.bounderies = this.callback.bounds();
-    //   }
-    //   state.layers.push(image);
-    //   this.states.push(state);
-    //   if(!this.collider) this.collider = image;
-    // }
     return this.animate("default",urls,1,1,1,1,0);
   }
 
@@ -375,6 +360,8 @@ class Sprite extends GameObject{
       if(this.state().frame>this.state().nf-1){
         this.state().frame = 0;
         this.state().repeat--;
+      }else if(this.state().frame < 0){
+        this.state().frame = this.state().nf-1;
       }
     }
   }

@@ -1,6 +1,6 @@
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
- * @description - Represents an abstract polygon with n number of lines
+ * @description - Represents an abstract polygon with n number of sides
 */
 
 class Polygon extends GameObject {
