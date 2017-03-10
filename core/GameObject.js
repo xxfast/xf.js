@@ -13,13 +13,11 @@
      */
   constructor(id="",x=0,y=0,w=0,h=0) {
       this.id = id;
-      this.position = {x:x,y:y};
-      this.scale = {width:w,height:h};
-      this.origin = {x:0,y:0};
-      this.rotation = 0;
-      this.points = [];
+      this.vertices = [];
       this.bounderies = {};
       this.components = [];
+      this.attach(new Movable());
+      this.attach(new Transformable());
       this.debug = {enabled:false};
   }
 
@@ -32,23 +30,18 @@
   }
 
   /**
-    * moves the  object to the given position
-    * @param {int} x - x position to move.
-    * @param {int} y - y position to move.
+    * attaches a particular behavior component to the game object
+    * @param {Component} component - component to attach
   */
-  translate(x,y){
-    this.position = {x:x,y:y};
-    return this;
-  }
-
-  /**
-    * @virtual
-    * transform the  object to the given scale
-    * @param {int} width - desired width.
-    * @param {int} height - desired height.
-  */
-  transform(width,height){
-    this.scale = {width:width,height:height};
+  attach(component){
+    Object.assign(this,component);
+    while (component = Reflect.getPrototypeOf(component)) {
+      if(component == Object.prototype) break; // no need to redefine Object behavior
+      let keys = Reflect.ownKeys(component)
+      for(var i=1;i<keys.length;i++){
+        Reflect.getPrototypeOf(this)[keys[i]] = component[keys[i]];
+      }
+    }
     return this;
   }
 
@@ -57,45 +50,24 @@
     * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
   */
   bounds(){
-    this.points = [{x:0, y:0},{x:+this.scale.width, y:0},
+    this.vertices = [{x:0, y:0},{x:+this.scale.width, y:0},
                    {x:+this.scale.width, y:+this.scale.height},{x:0, y:0+this.scale.height}];
     var rads = -(this.rotation * Math.PI)/180;
-    for (var i=0;i < this.points.length;i++) {
-     var dx = this.points[i].x - this.origin.x;
-     var dy = this.points[i].y - this.origin.y;
-     this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
-     this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
+    for (var i=0;i < this.vertices.length;i++) {
+     var dx = this.vertices[i].x - this.origin.x;
+     var dy = this.vertices[i].y - this.origin.y;
+     this.vertices[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
+     this.vertices[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
     }
-    var minx=this.points[0].x, miny=this.points[0].y;
-    var maxx=this.points[0].x, maxy=this.points[0].y;
-    for(var i=0;i<this.points.length;i++){
-      if(this.points[i].x<minx) minx = this.points[i].x;
-      if(this.points[i].y<miny) miny = this.points[i].y;
-      if(this.points[i].x>maxx) maxx = this.points[i].x;
-      if(this.points[i].y>maxy) maxy = this.points[i].y;
+    var minx=this.vertices[0].x, miny=this.vertices[0].y;
+    var maxx=this.vertices[0].x, maxy=this.vertices[0].y;
+    for(var i=0;i<this.vertices.length;i++){
+      if(this.vertices[i].x<minx) minx = this.vertices[i].x;
+      if(this.vertices[i].y<miny) miny = this.vertices[i].y;
+      if(this.vertices[i].x>maxx) maxx = this.vertices[i].x;
+      if(this.vertices[i].y>maxy) maxy = this.vertices[i].y;
     }
     return {top:miny,right:maxx,down:maxy,left:minx};
-  }
-  /**
-    * @virtual
-    * rotates the  object by given amount of degrees
-    * @param {int} degree - amount of degrees to move.
-  */
-  rotate(degree=0){
-    this.rotation = (!this.rotation)?degree:this.rotation+degree;
-    this.bounderies = this.bounds();
-    return this;
-  }
-
-  /**
-    * sets the origin of the object to the given position
-    * if called without parameters, it defaults to center of the object
-    * @param {int} [x=width/2] - anchor in the x position.
-    * @param {int} [y=height/2] - anchor in the y position.
-  */
-  center(x=this.scale.width/2,y=this.scale.height/2){
-    this.origin = {x:x,y:y};
-    return this;
   }
 
   /**

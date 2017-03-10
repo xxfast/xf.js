@@ -14,6 +14,7 @@ class Sprite extends GameObject{
     */
   constructor(id,x,y,w,h) {
     super(id,x,y,w,h);
+    this.attach(new Rotatable());
     /* physics */
     {
       this.speed = {x:0,y:0};
@@ -30,10 +31,10 @@ class Sprite extends GameObject{
     };
     /* debug */
     {
-      this.debug.drawCollisionMask = false;
-      this.debug.drawBounds = false;
-      this.debug.drawCenter = false;
-      this.debug.drawContainer = false;
+      this.debug.drawCollisionMask = true;
+      this.debug.drawBounds = true;
+      this.debug.drawCenter = true;
+      this.debug.drawContainer = true;
     };
   }
 
@@ -205,17 +206,6 @@ class Sprite extends GameObject{
     return this;
   }
 
-  /**
-    * @virtual
-    * transform the  object to the given scale
-    * @param {int} width - desired width.
-    * @param {int} height - desired height.
-  */
-  transform(width,height){
-    super.transform(width,height);
-    this.bounds();
-    return this;
-  }
 
   /**
     * sets the custom collision mask for the current, or provided state of the sprite
@@ -410,12 +400,12 @@ class Sprite extends GameObject{
       if(this.debug.drawContainer){
         c.strokeStyle="green";
         c.beginPath();
-        var xpoffset = ((this.position.x + this.points[0].x)/camera.scale.width)* cwidth;
-        var ypoffset = ((this.position.y + this.points[0].y)/camera.scale.height)* cheight;
+        var xpoffset = ((this.position.x + this.vertices[0].x)/camera.scale.width)* cwidth;
+        var ypoffset = ((this.position.y + this.vertices[0].y)/camera.scale.height)* cheight;
         c.moveTo( xpoffset - xcoffset, ypoffset - ycoffset);
-        for(var i=0;i<this.points.length;i++){
-          xpoffset = ((this.position.x + this.points[i].x)/camera.scale.width)* cwidth;
-          ypoffset = ((this.position.y + this.points[i].y)/camera.scale.height)* cheight;
+        for(var i=0;i<this.vertices.length;i++){
+          xpoffset = ((this.position.x + this.vertices[i].x)/camera.scale.width)* cwidth;
+          ypoffset = ((this.position.y + this.vertices[i].y)/camera.scale.height)* cheight;
           c.lineTo( xpoffset - xcoffset, ypoffset - ycoffset);
         }
         c.closePath();
