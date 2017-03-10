@@ -349,7 +349,7 @@ class Sprite extends GameObject{
 
 
   /**
-    * updates the sprite once
+    * updates the sprite just once
   */
   update(){
     this.speed = {x: this.speed.x + this.acceleration.x, y: this.speed.y + this.acceleration.y}

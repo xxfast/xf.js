@@ -23,6 +23,7 @@ class Scene extends GameObject{
   /*
     * renders the scene on the given canvas
     * @param {Sprite} sprite - the canvas to draw the scene on.
+    *   @returns {Sprite} itself
   */
   add(s){
     for (var i = 0; i < arguments.length; i++ ) {
