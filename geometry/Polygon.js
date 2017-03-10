@@ -109,7 +109,6 @@ class Polygon extends GameObject {
   rotate(degree=0){
     //super.rotate(degree);
     this.rotation = (!this.rotation)?degree:this.rotation+degree;
-    this.bounderies = this.bounds();
     var rads = -(degree * Math.PI)/180;
     for (var i=0;i < this.points.length;i++) {
       var dx = this.points[i].x - this.origin.x;

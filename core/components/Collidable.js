@@ -2,8 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a collidable behaviors like collideon, bounds etc.
 */
-class Collidable {
+class Collidable extends Component{
   constructor() {
+    super();
     this.vertices = [];
     this.bounderies = {};
   }

@@ -2,8 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like rotate etc.
 */
-class Rotatable {
+class Rotatable extends Component {
   constructor() {
+    super();
     this.rotation = 0;
   }
 
