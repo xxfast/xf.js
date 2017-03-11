@@ -15,6 +15,7 @@ class Sprite extends GameObject{
   constructor(id,x,y,w,h) {
     super(id,x,y,w,h);
     this.attach(new Rotatable());
+    this.attach(new Collidable());
     /* physics */
     {
       this.speed = {x:0,y:0};

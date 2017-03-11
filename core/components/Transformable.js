@@ -20,6 +20,16 @@ class Transformable extends Component{
   }
 
   /**
+    * transform the object to the given scale
+    * @param {int} byX - increse/decrease in width.
+    * @param {int} byY - increse/decrease in height.
+  */
+  resize(byX,byY){
+    this.transform(this.scale.width+byX,this.scale.height+byY)
+    return this;
+  }
+
+  /**
     * sets the origin of the object to the given position
     * if called without parameters, it defaults to center of the object
     * @param {int} [x=width/2] - anchor in the x position.

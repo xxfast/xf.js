@@ -44,8 +44,6 @@ class Collidable extends Component{
           return false;
       if ((this.position.y > (obj.position.y+obj.scale.height)) ||( obj.position.y > (this.position.y+ this.scale.height)))
           return false;
-    }else{
-
     }
     return true;
   }
