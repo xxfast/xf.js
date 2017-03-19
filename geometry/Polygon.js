@@ -1,4 +1,5 @@
 /**
+ * @virtual
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an abstract polygon with n number of sides
 */
@@ -30,8 +31,7 @@ class Polygon extends GameObject {
     * @override
     * updates the sprite once
   */
-  update(){
-  }
+  update(){ }
 
   /**
     * @override

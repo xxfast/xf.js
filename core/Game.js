@@ -6,4 +6,9 @@ class Game {
   constructor() {
     this.managers = { scenes: new SceneManager() };
   }
+
+
+  manage(manager){
+    this.managers.
+  }
 }
