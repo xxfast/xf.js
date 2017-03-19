@@ -10,9 +10,11 @@ class Manager {
   /**
     * assigns an component to be managed by the manager
     * @param {Component} component - component to manage.
+    * @param {Profile} profile - profile to manage the component
     *   @returns {Manager} itself
   */
-  manage(component){
+  manage(component, profile={update:1, current:0}){
+    component.profile = profile;
     this.managed.push(component);
     return this;
   }

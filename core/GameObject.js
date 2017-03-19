@@ -38,6 +38,7 @@
     Object.assign(this,component);
     while (component = Reflect.getPrototypeOf(component)) {
       var compfacade = {};
+      if(component == Component.prototype) break;
       if(component == Object.prototype) break; // no need to redefine Object behavior
       let keys = Reflect.ownKeys(component);
       for(var i=1;i<keys.length;i++){
@@ -45,6 +46,7 @@
         Reflect.getPrototypeOf(this)[keyname] = component[keys[i]];
         compfacade[keyname] = Reflect.getPrototypeOf(this)[keyname];
       }
+      compfacade["manager"] = component.manager;
       this.components[component.constructor.name] =  compfacade;
     }
     return this;

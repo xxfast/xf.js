@@ -5,10 +5,29 @@
 class Game {
   constructor() {
     this.managers = { scenes: new SceneManager() };
+    this.states = [];
   }
 
-
-  manage(manager){
-    this.managers.
+  /*
+    * gets the scene manager of this game
+    *   @returns {SceneManager} sceneManager
+  */
+  scenes(){
+    return this.managers.scenes;
   }
+
+  /*
+    * updates the current scene of this game
+  */
+  update(){
+      this.managers.scenes.update();
+  }
+
+  /*
+    * renders the current scene of this game
+  */
+  render(){
+    this.managers.scenes.render();
+  }
+
 }
