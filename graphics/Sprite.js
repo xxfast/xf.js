@@ -54,25 +54,6 @@ class Sprite extends GameObject{
     return this.animate("default",urls,1,1,1,1,0);
   }
 
-  /**
-    * updates the sprite just once
-  */
-  update(){
-    this.speed = {x: this.speed.x + this.acceleration.x, y: this.speed.y + this.acceleration.y}
-    this.position.x += this.speed.x;
-    this.position.y += this.speed.y;
-    if(this.state().repeat>=1 || this.state().repeat<0){
-      this.state().frame+= this.fpt;
-      if(this.state().frame>this.state().nf-1){
-        this.state().frame = 0;
-        this.state().repeat--;
-      }else if(this.state().frame < 0){
-        this.state().frame = this.state().nf-1;
-      }
-    }
-  }
-
-
   /*
     * renders the sprite on the given canvas,
     * and if a camera is provided, then as seen from given camera

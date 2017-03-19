@@ -22,7 +22,7 @@ class Component {
     * update all of the properties related this componet
   */
   tick(){
-    throw new Error('must be implemented by subclass!');
+    //throw new Error('must be implemented by subclass!');
   }
 
 }

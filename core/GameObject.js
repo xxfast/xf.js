@@ -12,7 +12,7 @@
      * @param {int} [h=0] - desired height.
      */
   constructor(id="",x=0,y=0,w=0,h=0) {
-      this.components = [];
+      this.components = {};
       this.vertices = [];
       this.bounderies = {};
       this.attach(new Identifiable(id));
@@ -32,24 +32,36 @@
   /**
     * attaches a particular behavior component to the game object
     * @param {Component} component - component to attach
+    *   @returns {GameObject} itself
   */
   attach(component){
     Object.assign(this,component);
     while (component = Reflect.getPrototypeOf(component)) {
+      var compfacade = {};
       if(component == Object.prototype) break; // no need to redefine Object behavior
-      let keys = Reflect.ownKeys(component)
+      let keys = Reflect.ownKeys(component);
       for(var i=1;i<keys.length;i++){
-        Reflect.getPrototypeOf(this)[keys[i]] = component[keys[i]];
+        var keyname = keys[i];
+        Reflect.getPrototypeOf(this)[keyname] = component[keys[i]];
+        compfacade[keyname] = Reflect.getPrototypeOf(this)[keyname];
       }
+      this.components[component.constructor.name] =  compfacade;
     }
     return this;
   }
 
   /*
-    * @abstract
-    * updates the object
+    * updates all the components of the given game object by one tick
   */
-  update() { throw new Error('must be implemented by subclass!'); }
+  update() {
+    for (var component in this.components) {
+      if (this.components.hasOwnProperty(component)) {
+        if(this.components[component].hasOwnProperty("tick")){
+          this.components[component].tick.call(this);
+        }
+      }
+    }
+  }
 
   /*
     * @abstract

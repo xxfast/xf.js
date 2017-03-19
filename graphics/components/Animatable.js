@@ -106,4 +106,16 @@ class Animatable extends Component {
     this.goto(name);
     return this;
   }
+
+  tick(){
+    if(this.state().repeat>=1 || this.state().repeat<0){
+      this.state().frame+= this.fpt;
+      if(this.state().frame>this.state().nf-1){
+        this.state().frame = 0;
+        this.state().repeat--;
+      }else if(this.state().frame < 0){
+        this.state().frame = this.state().nf-1;
+      }
+    }
+  }
 }
