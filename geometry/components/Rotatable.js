@@ -25,7 +25,7 @@ class RotatablePolygon extends Component {
       this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
     }
     this.scale = {width:this.width(),height:this.height()};
-    this.bounderies = this.bounds();
+    if(this.bounds) this.bounderies = this.bounds();
     return this;
   }
 }

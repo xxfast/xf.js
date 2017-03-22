@@ -116,11 +116,7 @@ class Sprite extends GameObject{
                      ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* cheight); // draw the bounding boxes
       }
       if(this.debug.drawCollisionMask && this.state().collider){
-          // c.drawImage(this.state().collider,(xoffset - xcoffset)+this.bounderies.left,
-          //            (yoffset - ycoffset)+this.bounderies.top,
-          //            ((this.bounderies.right-this.bounderies.left)/camera.scale.width)* cwidth,
-          //            ((this.bounderies.down-this.bounderies.top)/camera.scale.height)* cheight); // draw collition image
-         var args = [this.state().collider];
+        var args = [this.state().collider];
          if(this.state().hasOwnProperty('frame'))
            args.push((this.state().cp[Math.round(this.state().frame)] || {x:0}).x, // clipping x position of sprite cell
                      (this.state().cp[Math.round(this.state().frame)] || {y:0}).y, // clipping y position of sprite cell

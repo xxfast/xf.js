@@ -13,18 +13,18 @@ class Manager {
     * @param {Profile} profile - profile to manage the component
     *   @returns {Manager} itself
   */
-  manage(component, profile={update:1, current:0}){
-    component.profile = profile;
+  manage(component, profiles=null){
+    if(profiles) component.profile(profiles);
     this.managed.push(component);
     return this;
   }
 
   /**
-    * Subsequently update all of the managed components
+    * Subsequently process all of the managed components
   */
   update(){
     for (var i = 0; i < this.managed.length; i++) {
-      this.managed[i].update();
+      this.managed[i].process();
     }
   }
 }

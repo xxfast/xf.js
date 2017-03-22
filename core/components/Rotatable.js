@@ -6,7 +6,18 @@ class Rotatable extends Component {
   constructor() {
     super();
     this.rotation = 0;
+    this.rotationVelocity = 0;
   }
+
+  /**
+    * rotates the  object by given amount of degrees
+    * @param {int} degree - amount of degrees to move.
+  */
+  torque(degree=0){
+    this.rotationVelocity = degree;
+    return this;
+  }
+
 
   /**
     * rotates the  object by given amount of degrees
@@ -14,8 +25,12 @@ class Rotatable extends Component {
   */
   rotate(degree=0){
     this.rotation = (!this.rotation)?degree:this.rotation+degree;
-    this.bounderies = this.bounds();
+    if(this.bounds) this.bounderies = this.bounds();
     return this;
+  }
+
+  process(){
+    this.rotate(this.rotationVelocity);
   }
 
 

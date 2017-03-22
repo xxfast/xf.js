@@ -20,7 +20,7 @@ class Game {
     * updates the current scene of this game
   */
   update(){
-      this.managers.scenes.update();
+      this.managers.scenes.process();
   }
 
   /*

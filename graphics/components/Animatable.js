@@ -107,7 +107,10 @@ class Animatable extends Component {
     return this;
   }
 
-  tick(){
+  /*
+    * defines how the component state change on one update
+  */
+  process(){
     if(this.state().repeat>=1 || this.state().repeat<0){
       this.state().frame+= this.fpt;
       if(this.state().frame>this.state().nf-1){

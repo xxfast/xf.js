@@ -15,29 +15,67 @@ class Scene extends GameObject{
   constructor(id,bg="white",w,h,canvas=null) {
     super(id,0,0,w,h);
     this.elements = [];
+    this.managers = {};
+    this.manageProfiles = {Animatable:{process:1},
+                           Movable:{process:5}};
+    this.observer = null;
     this.background = bg;
     this.canvas = canvas;
     this.debug.show = false;
   }
 
   /*
-    * renders the scene on the given canvas
-    * @param {Sprite} sprite - the canvas to draw the scene on.
-    *   @returns {Sprite} itself
+    * checks whether the givens gameobject is a part of this scene
+    * @param {GameObject} obj - the object to check
+    *   @returns {int} index found
   */
-  add(s){
+  contains(object){
+    for (var i = 0; i < this.elements.length; i++) {
+      if (this.elements[i].identify(object.id)){
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /*
+    * adds gameobjects to the scene
+    * @param {GameObject[]} args - the gameobjects to add to the scene.
+    *   @returns {Scene} itself
+  */
+  add(args){
     for (var i = 0; i < arguments.length; i++ ) {
-       this.elements.push(arguments[i]);
+      this.elements.push(arguments[i]);
+      for (var component in arguments[i].components) {
+        if (arguments[i].components.hasOwnProperty(component)) {
+          if(!this.managers.hasOwnProperty(component))
+            this.managers[component] = new Manager();
+          this.managers[component].manage(arguments[i].components[component],this.manageProfiles[component]);
+        }
+      }
+      if((arguments[i] instanceof Camera))
+        arguments[i].targets(this);
     }
     return this;
   }
 
   /*
-    * removes a sprite from the scene
-    * @param {Sprite} sprite - the canvas to draw the scene on.
+    * removes a gameobject from the scene
+    * @param {GameObject} obj - the canvas to draw the scene on.
   */
-  remove(sprite){
-    this.elements = this.elements.filter(item => item !== sprite);
+  remove(obj){
+    this.elements = this.elements.filter(item => item !== obj);
+    return this;
+  }
+
+  /*
+    * adds and sets the observer for the scene
+    * @param {Camera} camera - the camera to set to observe through
+    *   @returns {Scene} itself
+  */
+  observe(camera=null){
+    if(this.contains(camera)<0) this.add(camera);
+    this.observer = camera;
     return this;
   }
 
@@ -56,7 +94,7 @@ class Scene extends GameObject{
     * @param {context} c - the canvas to draw the scene on.
     * @param {Camera} [camera=false] - the camera to look at the scene from.
   */
-  render(c,camera=false){ // {position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}
+  render(c,camera=this.observer){ // {position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}
     this.canvas = c.canvas;
     this.clear(c);
     c.save();
@@ -69,7 +107,7 @@ class Scene extends GameObject{
     //c.translate(camera.position.x - camera.origin.x, camera.position.y - camera.origin.y);
     for(var i=0; i<this.elements.length; i++){
       var s = this.elements[i];
-      if(!camera || s.within(camera)){
+      if(!(s instanceof Camera) && ( !camera || s.within(camera) )){
         this.elements[i].render(c,camera || undefined);
       }
     }

@@ -67,8 +67,11 @@ class Movable extends Component {
     return this;
   }
 
-  tick(){
-    this.speed = {x: this.speed.x + this.acceleration.x, y: this.speed.y + this.acceleration.y}
+  /*
+    * defines how the movable component change state on one update
+  */
+  process(){
+    this.velocity(this.speed.x + this.acceleration.x, this.speed.y + this.acceleration.y );
     this.move(this.speed.x,this.speed.y);
   }
 }

@@ -11,7 +11,7 @@
      * @param {int} [w=0] - desired width.
      * @param {int} [h=0] - desired height.
      */
-  constructor(id="",x=0,y=0,w=0,h=0) {
+  constructor(id,x=0,y=0,w=0,h=0) {
       this.components = {};
       this.vertices = [];
       this.bounderies = {};
@@ -38,13 +38,14 @@
     Object.assign(this,component);
     while (component = Reflect.getPrototypeOf(component)) {
       var compfacade = {};
-      if(component == Component.prototype) break;
+      if(component == Component.prototype) break; // base component act as an interface here
       if(component == Object.prototype) break; // no need to redefine Object behavior
       let keys = Reflect.ownKeys(component);
       for(var i=1;i<keys.length;i++){
         var keyname = keys[i];
+        compfacade[keyname] = component[keys[i]];
+        if(keyname=="process" || keyname=="render") continue;
         Reflect.getPrototypeOf(this)[keyname] = component[keys[i]];
-        compfacade[keyname] = Reflect.getPrototypeOf(this)[keyname];
       }
       compfacade["manager"] = component.manager;
       this.components[component.constructor.name] =  compfacade;
@@ -58,8 +59,9 @@
   update() {
     for (var component in this.components) {
       if (this.components.hasOwnProperty(component)) {
-        if(this.components[component].hasOwnProperty("tick")){
-          this.components[component].tick.call(this);
+        var component = this.components[component];
+        if(component.hasOwnProperty("process")){
+          component.process.call(this);
         }
       }
     }

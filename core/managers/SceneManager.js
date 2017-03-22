@@ -62,13 +62,15 @@ class SceneManager extends Manager{
     *   @returns {Scene} the removed scene
   */
   remove(id){
-    return this.scenes.splice(this.scenes.indexof(this.get(id)),1);
+    var index = this.contains(this.get(id));
+    var toReturn = ((index>0)?this.scenes.splice(index,1):null);
+    return toReturn;
   }
 
   /**
-    *  update the current scene the SceneManager is focused on
+    *  processes the current scene the SceneManager is focused on
   */
-  update(){
+  process(){
     if(this.current){
       this.current.update();
     }
