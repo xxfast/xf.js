@@ -15,6 +15,7 @@ class Manager {
   */
   manage(component, profiles=null){
     if(profiles) component.profile(profiles);
+    component.manager = this;
     this.managed.push(component);
     return this;
   }

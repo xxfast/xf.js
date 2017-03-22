@@ -16,8 +16,9 @@ class Scene extends GameObject{
     super(id,0,0,w,h);
     this.elements = [];
     this.managers = {};
-    this.manageProfiles = {Animatable:{process:1},
-                           Movable:{process:5}};
+    this.manageProfiles = {
+                           Animatable:{process:{on:10}}
+                          };
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
