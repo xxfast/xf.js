@@ -27,8 +27,16 @@ class Debuggable extends Component {
     * enable/disable debugging parameters in the debugging mode
     *   @returns {GameObject} itself
   */
-  render(){
-    if(this.debug.enabled) return;
+  render(c,camera){
+    if(!this.debug.enabled) return;
+    var cwidth = camera.target.scene.canvas.width;
+    var cheight = camera.target.scene.canvas.height;
+    var rxoffset = (Math.cos(camera.rotation+this.rotation));
+    var ryoffset = (Math.sin(camera.rotation+this.rotation));
+    var xoffset =  ((this.position.x/camera.scale.width) * cwidth);
+    var xcoffset = ((camera.position.x/camera.scale.width) * cwidth);
+    var yoffset = ((this.position.y/camera.scale.height) * cheight);
+    var ycoffset = ((camera.position.y/camera.scale.height)* cheight);
     if(this.debug.drawCenter){
       c.fillStyle="yellow";
       var cpxoffset = (((this.position.x + this.origin.x - 2 )/camera.scale.width) * cwidth);
