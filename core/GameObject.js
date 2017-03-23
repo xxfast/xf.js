@@ -40,7 +40,9 @@
                       profiles:component.profiles,
                       profile:component.profile ,
                       beforeProcess: component.beforeProcess,
-                      shouldProcess: component.shouldProcess};
+                      shouldProcess: component.shouldProcess,
+                      beforeRender:component.beforeRender,
+                      shouldRender:component.shouldRender};
     var reflected = component;
     while (reflected = Reflect.getPrototypeOf(reflected)) {
       if(reflected == Component.prototype) break; // base component act as an interface here
@@ -65,11 +67,9 @@
       if (this.components.hasOwnProperty(component)) {
         var component = this.components[component];
         if(component.hasOwnProperty("process")){
-          if(component.profiles.hasOwnProperty("process")){
-            component.beforeProcess();
-            if(component.shouldProcess()){
-              component.process.call(this);
-            }
+          component.beforeProcess();
+          if(component.shouldProcess()){
+            component.process.call(this);
           }
         }
       }
@@ -77,15 +77,22 @@
   }
 
   /*
-    * @abstract
     * renders the GameObject on the given canvas
     * @param {int} c - the canvas to draw the GameObject on.
   */
-  render(c) { throw new Error('must be implemented by subclass!'); }
-
-  static debug(obj){
-    for(var propt in obj.debug){
-        obj.debug[propt] = !obj[propt] ;
+  render(c,camera) {
+    for (var component in this.components) {
+      if (this.components.hasOwnProperty(component)) {
+        var component = this.components[component];
+        if(component.hasOwnProperty("render")){
+          component.beforeRender();
+          if(component.shouldRender()){
+            component.render.call(this,c,camera);
+          }
+        }
+      }
     }
   }
+
+
 }

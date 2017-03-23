@@ -5,7 +5,7 @@
 */
 class Component {
   constructor() {
-    this.profiles = {process:{on:1, now:0}};
+    this.profiles = {render:{on:1, now:0}};
   }
 
   /*
@@ -35,11 +35,11 @@ class Component {
 
   /*
     * @virtual
-    * determines wheather the component should process based on the last profile
+    * determines wheather the component should process based on the process profile
     *   @returns {bool} should
   */
   shouldProcess(){
-    return (this.profiles["process"].now == this.profiles["process"].on);
+    return (!this.profiles["process"])?true:(this.profiles["process"].now == this.profiles["process"].on);
   }
 
   /*
@@ -47,6 +47,7 @@ class Component {
   */
   //buggy!
   beforeProcess(){
+    if(!this.profiles["process"]) return;
     this.profiles.process.now++;
     if(this.profiles.process.now>this.profiles.process.on){
       this.profiles.process.now=0;
@@ -59,7 +60,26 @@ class Component {
   process() { throw new Error('must be implemented by subclass!'); }
 
   /*
+    * @virtual
+    * determines wheather the component should render based on the render profile
+    *   @returns {bool} should
+  */
+  shouldRender(){
+    return (!this.profiles["render"])?true:(this.profiles["render"].now == this.profiles["render"].on);
+  }
+
+  /*
+    * component logic before rendeing
+  */
+  beforeRender(){
+    this.profiles.render.now++;
+    if(this.profiles.render.now>this.profiles.render.on){
+      this.profiles.render.now=0;
+    }
+  }
+
+  /*
     * defines how this component handles rendering
   */
-  render() { throw new Error('must be implemented by subclass!');}
+  render(c,camera) { throw new Error('must be implemented by subclass!');}
 }

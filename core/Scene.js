@@ -16,9 +16,7 @@ class Scene extends GameObject{
     super(id,0,0,w,h);
     this.elements = [];
     this.managers = {};
-    this.manageProfiles = {
-                           Animatable:{process:{on:10}}
-                          };
+    this.manageProfiles = {};//{Animatable:{process:{on:10}}};
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
@@ -123,6 +121,9 @@ class Scene extends GameObject{
           c.fillText(prop + ': ' + this.debug[prop], 5, (++i)*12);
         }
         //c.strokeRect(-1,-1,100,i*12+5);
+        for(var i=0; i<this.elements.length; i++){
+          this.elements[i].render();
+        }
     }
   }
 
@@ -132,7 +133,7 @@ class Scene extends GameObject{
     */
   clear(c){
     c.fillStyle=this.background;
-    c.clearRect(0, 0, this.scale.width, this.scale.height);
+    //c.clearRect(0, 0, this.scale.width, this.scale.height);
     c.fillRect(0, 0, this.scale.width, this.scale.height );
   }
 }
