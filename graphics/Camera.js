@@ -14,7 +14,7 @@ class Camera extends GameObject{
     */
   constructor(id,scene,x,y,w,h) {
     super(id,x,y,w,h);
-    this.attach(new Rotatable());
+    this.attach(new Rotatable(this));
     this.target = {scene:scene,object:false};
     this.options = {contained:true};
   }

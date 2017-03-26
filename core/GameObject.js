@@ -15,10 +15,9 @@
       this.components = {};
       this.vertices = [];
       this.bounderies = {};
-      this.attach(new Identifiable(id));
-      this.attach(new Movable());
-      this.attach(new Transformable());
-      this.debug = {enabled:false};
+      this.attach(new Identifiable(this,id));
+      this.attach(new Movable(this));
+      this.attach(new Transformable(this));
   }
 
   /**
@@ -36,13 +35,7 @@
   */
   attach(component){
     Object.assign(this,component);
-    var compfacade = {manager:component.manager,
-                      profiles:component.profiles,
-                      profile:component.profile ,
-                      beforeProcess: component.beforeProcess,
-                      shouldProcess: component.shouldProcess,
-                      beforeRender:component.beforeRender,
-                      shouldRender:component.shouldRender};
+    var compfacade = {owner:component.owner};
     var reflected = component;
     while (reflected = Reflect.getPrototypeOf(reflected)) {
       if(reflected == Component.prototype) break; // base component act as an interface here

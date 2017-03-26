@@ -1,6 +1,6 @@
 class Identifiable extends Component{
-  constructor(id) {
-    super();
+  constructor(owner, id) {
+    super(owner);
     function uid() {
       function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)

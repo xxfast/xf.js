@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a behaviors like rotate etc.
 */
 class Rotatable extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.rotation = 0;
     this.rotationVelocity = 0;
   }

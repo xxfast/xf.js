@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a behaviors like transform, center for Polygons etc.
 */
 class TransformablePolygon extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.bounderies = {};
     this.origin = {x:0,y:0};
     this.scale = {width:0,height:0};

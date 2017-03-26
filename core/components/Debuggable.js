@@ -3,10 +3,10 @@
  * @description - Represents a component that help us developers to debug
 */
 class Debuggable extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.debug = { enabled:true,
-                   drawCollisionMask:true,
+                   drawCollisionMask:false,
                    drawBounds:true,
                    drawCenter: true,
                    drawContainer: true };

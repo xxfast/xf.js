@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a collidable behaviors like collideon, bounds etc.
 */
 class Collidable extends Component{
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.vertices = [];
     this.bounderies = {};
     this.collider = null;

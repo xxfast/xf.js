@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a collidable behaviors like collideon, bounds for Polygons etc.
 */
 class CollidablePolygon extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
   }
 
   /**

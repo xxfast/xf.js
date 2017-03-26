@@ -11,17 +11,12 @@ class Polygon extends GameObject {
     */
   constructor(points=[{x:0,y:0}],color={fill:false,stroke:false}) {
     super();
-    this.attach(new TransformablePolygon());
-    this.attach(new CollidablePolygon());
-    this.attach(new RotatablePolygon());
+    this.attach(new TransformablePolygon(this));
+    this.attach(new CollidablePolygon(this));
+    this.attach(new RotatablePolygon(this));
     this.points = points;
-    this.position = {x:points[0].x, y:points[0].y};
-    this.scale = {width: this.width(),height:this.height()};
     this.color = color;
-    this.rotation = 0;
     //debug
-    this.debug.drawBounds = false;
-    this.debug.drawCenter = false;
     this.bounderies = this.bounds();
   }
 

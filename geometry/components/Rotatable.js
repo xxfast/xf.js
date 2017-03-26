@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a behaviors like rotation for Polygons etc.
 */
 class RotatablePolygon extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.rotation = 0;
   }
 

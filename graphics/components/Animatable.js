@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a animatable behaviors like animate, play etc.
 */
 class Animatable extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.states = [];
     this.current= 0;
     this.fpt = 1;
