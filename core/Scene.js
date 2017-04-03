@@ -17,7 +17,7 @@ class Scene extends GameObject{
     this.elements = [];
     this.managers = {};
     this.manageProfiles = {Animatable:{process:{on:1}},
-                           Rotatable:{process:{on:5}}};
+                           Rotatable:{process:{on:1}}};
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
@@ -81,13 +81,20 @@ class Scene extends GameObject{
   }
 
   /**
+    * initialise the scene and components
+  */
+  initialise(){
+    for (var manager in this.managers) {
+      if (this.managers.hasOwnProperty(manager)) {
+        this.managers[manager].initialise();
+      }
+    }
+  }
+
+  /**
     * updates the scene once
   */
   update(){
-    // for(var i=0; i<this.managers.length; i++){
-    //   this.managers[i].update();
-    // }
-
     for (var manager in this.managers) {
       if (this.managers.hasOwnProperty(manager)) {
         this.managers[manager].update();

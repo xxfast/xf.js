@@ -35,6 +35,16 @@ class Manager {
     return this;
   }
 
+  /**
+    * Subsequently initialises all of the managed components
+  */
+  initialise(){
+    for (var i = 0; i < this.managed.length; i++) {
+      if(this.managed[i].hasOwnProperty("initialise")){
+        this.managed[i].initialise.call(this.managed[i].owner);
+      }
+    }
+  }
 
   /*
     * @virtual

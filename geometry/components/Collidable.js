@@ -5,6 +5,10 @@
 class CollidablePolygon extends Component {
   constructor(owner) {
     super(owner);
+    this.vertices = [];
+    this.bounderies = {};
+    this.collider = null;
+    this.mass = 1;
   }
 
   /**
@@ -13,6 +17,16 @@ class CollidablePolygon extends Component {
     * @returns {Object} bounds - bounds object formated as {top:,right:,down:,left:}.
   */
   bounds(){
+    this.vertices = [{x:0, y:0},{x:+this.scale.width, y:0},
+                   {x:+this.scale.width, y:+this.scale.height},{x:0, y:0+this.scale.height}];
+    var rads = -(this.rotation * Math.PI)/180;
+    for (var i=0;i < this.vertices.length;i++) {
+      var dx = this.vertices[i].x - this.origin.x;
+      var dy = this.vertices[i].y - this.origin.y;
+      // TODO : fix this shit
+      this.vertices[i].x -= dx;
+      this.vertices[i].y -= dy;
+    }
     var minx=this.points[0].x, miny=this.points[0].y;
     var maxx=this.points[0].x, maxy=this.points[0].y;
     for(var i=0;i<this.points.length;i++){

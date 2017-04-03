@@ -19,6 +19,11 @@ class Component {
   }
 
   /*
+    * defines how the component should initialise after attaching to gameobject
+  */
+  initialise() { throw new Error('must be implemented by subclass!'); }
+
+  /*
     * defines how the component state change on one update
   */
   process() { throw new Error('must be implemented by subclass!'); }

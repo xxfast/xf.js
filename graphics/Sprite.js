@@ -15,8 +15,9 @@ class Sprite extends GameObject{
   constructor(id,x,y,w,h) {
     super(id,x,y,w,h);
     this.attach(new Rotatable(this));
-    this.attach(new Collidable(this));
+    this.attach(new CollidableSprite(this));
     this.attach(new Animatable(this));
+    this.attach(new RenderableSprite(this));
     this.attach(new Debuggable(this));
   }
 
