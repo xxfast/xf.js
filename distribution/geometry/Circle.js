@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Circle = undefined;
+
 var _Polygon2 = require('./Polygon');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12,7 +17,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an Circle shape
 */
-var Circle = function (_Polygon) {
+var Circle = exports.Circle = function (_Polygon) {
   _inherits(Circle, _Polygon);
 
   function Circle() {

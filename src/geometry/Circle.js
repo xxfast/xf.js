@@ -4,7 +4,7 @@ import {Polygon} from './Polygon'
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an Circle shape
 */
-class Circle extends Polygon {
+export class Circle extends Polygon {
   constructor(color={fill:false,stroke:false},x=0,y=0,r=0,step=1) {
     super(pathFromCircle(x,y,r,step),color);
   }

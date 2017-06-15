@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Rectangle = undefined;
+
 var _Polygon2 = require('./Polygon');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12,7 +17,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an Rectangle shape
 */
-var Rectangle = function (_Polygon) {
+var Rectangle = exports.Rectangle = function (_Polygon) {
   _inherits(Rectangle, _Polygon);
 
   function Rectangle() {
