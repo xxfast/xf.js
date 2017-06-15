@@ -14,6 +14,13 @@ var _Rectangle = require('./lib/geometry/Rectangle');
 
 var _Triangle = require('./lib/geometry/Triangle');
 
+var _Camera = require('./lib/graphics/Camera');
+
+var _Sprite = require('./lib/graphics/Sprite');
+
+/* importing graphics */
+
+
 /* importing geometry */
 var xf = {
   Game: _Game.Game,
@@ -22,7 +29,9 @@ var xf = {
   Polygon: _Polygon.Polygon,
   Circle: _Circle.Circle,
   Rectangle: _Rectangle.Rectangle,
-  Triangle: _Triangle.Triangle
+  Triangle: _Triangle.Triangle,
+  Camera: _Camera.Camera,
+  Sprite: _Sprite.Sprite
 };
 /* importing core */
 
