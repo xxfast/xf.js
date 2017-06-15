@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a behaviors like rotation for Polygons etc.
 */
 class RotatablePolygon extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.rotation = 0;
   }
 
@@ -24,8 +24,8 @@ class RotatablePolygon extends Component {
       this.points[i].x = (dx * Math.cos(rads) - dy * Math.sin(rads))+ this.origin.x;
       this.points[i].y = (dx * Math.sin(rads) + dy * Math.cos(rads))+ this.origin.y;
     }
-    this.scale = {width:this.width(),height:this.height()};
     if(this.bounds) this.bounderies = this.bounds();
+    this.scale = {width:this.bounderies.right-this.bounderies.left,height:this.bounderies.down-this.bounderies.top};
     return this;
   }
 }

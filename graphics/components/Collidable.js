@@ -2,9 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a collidable behaviors like collideon, bounds etc.
 */
-class Collidable extends Component{
-  constructor() {
-    super();
+class CollidableSprite extends Component{
+  constructor(owner) {
+    super(owner);
     this.vertices = [];
     this.bounderies = {};
     this.collider = null;
@@ -191,6 +191,7 @@ class Collidable extends Component{
       return false;
   }
 
+  
 
 
 

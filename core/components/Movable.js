@@ -3,8 +3,8 @@
  * @description - Represents a component that defines a behaviors like move, translate etc.
 */
 class Movable extends Component {
-  constructor() {
-    super();
+  constructor(owner) {
+    super(owner);
     this.position = {x:0,y:0};
     this.speed = {x:0,y:0};
     this.acceleration = {x:0,y:0};

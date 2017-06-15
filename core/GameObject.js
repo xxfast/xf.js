@@ -13,12 +13,9 @@
      */
   constructor(id,x=0,y=0,w=0,h=0) {
       this.components = {};
-      this.vertices = [];
-      this.bounderies = {};
-      this.attach(new Identifiable(id));
-      this.attach(new Movable());
-      this.attach(new Transformable());
-      this.debug = {enabled:false};
+      this.attach(new Identifiable(this,id));
+      this.attach(new Movable(this));
+      this.attach(new Transformable(this));
   }
 
   /**
@@ -36,13 +33,7 @@
   */
   attach(component){
     Object.assign(this,component);
-    var compfacade = {manager:component.manager,
-                      profiles:component.profiles,
-                      profile:component.profile ,
-                      beforeProcess: component.beforeProcess,
-                      shouldProcess: component.shouldProcess,
-                      beforeRender:component.beforeRender,
-                      shouldRender:component.shouldRender};
+    var compfacade = {owner:component.owner};
     var reflected = component;
     while (reflected = Reflect.getPrototypeOf(reflected)) {
       if(reflected == Component.prototype) break; // base component act as an interface here
@@ -51,48 +42,12 @@
       for(var i=1;i<keys.length;i++){
         var keyname = keys[i];
         compfacade[keyname] = reflected[keys[i]];
-        if(keyname=="process" || keyname=="render") continue;
+        if(keyname=="initialise" || keyname=="process" || keyname=="render") continue;
         Reflect.getPrototypeOf(this)[keyname] = reflected[keys[i]];
       }
       this.components[reflected.constructor.name] =  compfacade;
     }
     return this;
   }
-
-  /*
-    * updates all the components of the given game object by one tick
-  */
-  update() {
-    for (var component in this.components) {
-      if (this.components.hasOwnProperty(component)) {
-        var component = this.components[component];
-        if(component.hasOwnProperty("process")){
-          component.beforeProcess();
-          if(component.shouldProcess()){
-            component.process.call(this);
-          }
-        }
-      }
-    }
-  }
-
-  /*
-    * renders the GameObject on the given canvas
-    * @param {int} c - the canvas to draw the GameObject on.
-  */
-  render(c,camera) {
-    for (var component in this.components) {
-      if (this.components.hasOwnProperty(component)) {
-        var component = this.components[component];
-        if(component.hasOwnProperty("render")){
-          component.beforeRender();
-          if(component.shouldRender()){
-            component.render.call(this,c,camera);
-          }
-        }
-      }
-    }
-  }
-
 
 }

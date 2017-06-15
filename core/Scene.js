@@ -16,11 +16,11 @@ class Scene extends GameObject{
     super(id,0,0,w,h);
     this.elements = [];
     this.managers = {};
-    this.manageProfiles = {};//{Animatable:{process:{on:10}}};
+    this.manageProfiles = {Animatable:{process:{on:1}},
+                           Rotatable:{process:{on:1}}};
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
-    this.debug.show = false;
   }
 
   /*
@@ -47,8 +47,10 @@ class Scene extends GameObject{
       this.elements.push(arguments[i]);
       for (var component in arguments[i].components) {
         if (arguments[i].components.hasOwnProperty(component)) {
-          if(!this.managers.hasOwnProperty(component))
+          if(!this.managers.hasOwnProperty(component)){
             this.managers[component] = new Manager();
+            this.managers[component].adopt(this.manageProfiles[component]);
+          }
           this.managers[component].manage(arguments[i].components[component],this.manageProfiles[component]);
         }
       }
@@ -79,11 +81,24 @@ class Scene extends GameObject{
   }
 
   /**
+    * initialise the scene and components
+  */
+  initialise(){
+    for (var manager in this.managers) {
+      if (this.managers.hasOwnProperty(manager)) {
+        this.managers[manager].initialise();
+      }
+    }
+  }
+
+  /**
     * updates the scene once
   */
   update(){
-    for(var i=0; i<this.elements.length; i++){
-      this.elements[i].update();
+    for (var manager in this.managers) {
+      if (this.managers.hasOwnProperty(manager)) {
+        this.managers[manager].update();
+      }
     }
   }
 
@@ -104,14 +119,19 @@ class Scene extends GameObject{
     // c.translate(((-camera.position.x)/camera.scale.width)*camera.target.scene.canvas.width,
     //              ((-camera.position.y)/camera.scale.height)*camera.target.scene.canvas.height);
     //c.translate(camera.position.x - camera.origin.x, camera.position.y - camera.origin.y);
-    for(var i=0; i<this.elements.length; i++){
-      var s = this.elements[i];
-      if(!(s instanceof Camera) && ( !camera || s.within(camera) )){
-        this.elements[i].render(c,camera || undefined);
+    // for(var i=0; i<this.elements.length; i++){
+    //   var s = this.elements[i];
+    //   if(!(s instanceof Camera) && ( !camera || s.within(camera) )){
+    //     this.elements[i].render(c,camera || undefined);
+    //   }
+    // }
+    for (var manager in this.managers) {
+      if (this.managers.hasOwnProperty(manager)) {
+        this.managers[manager].render(c,camera);
       }
     }
     c.rotate((camera.rotation) * Math.PI/180);
-    if(this.debug.show){
+    if(this.debug){
         var i = 0;
         c.fillStyle="white";
         c.fillRect(-1,-1,100,Object.keys(this.debug).length*12+5);
@@ -119,10 +139,6 @@ class Scene extends GameObject{
           c.fillStyle="black";
           c.font="12px Helvatica";
           c.fillText(prop + ': ' + this.debug[prop], 5, (++i)*12);
-        }
-        //c.strokeRect(-1,-1,100,i*12+5);
-        for(var i=0; i<this.elements.length; i++){
-          this.elements[i].render();
         }
     }
   }
@@ -133,7 +149,7 @@ class Scene extends GameObject{
     */
   clear(c){
     c.fillStyle=this.background;
-    //c.clearRect(0, 0, this.scale.width, this.scale.height);
+    c.clearRect(0, 0, this.scale.width, this.scale.height);
     c.fillRect(0, 0, this.scale.width, this.scale.height );
   }
 }
