@@ -1,9 +1,11 @@
+import {GameObject} from '../../core/GameObject'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a singular sprite with embedded physics.
  * @extends Object
 */
-class Sprite extends GameObject{
+export class Sprite extends GameObject{
   /**
     * Create an Sprite.
     * @param {string} id - name of the Sprite.

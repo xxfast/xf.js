@@ -1,8 +1,10 @@
+import {Component} from '../../core/components/Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a collidable behaviors like collideon, bounds etc.
 */
-class CollidableSprite extends Component{
+export class CollidableSprite extends Component{
   constructor(owner) {
     super(owner);
     this.vertices = [];

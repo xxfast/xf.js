@@ -1,8 +1,10 @@
+import {Component} from '../../core/components/Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines renderable behaviour of a sprite
 */
-class RenderableSprite extends Component {
+export class RenderableSprite extends Component {
   constructor(owner) {
     super(owner);
   }

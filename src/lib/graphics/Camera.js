@@ -1,8 +1,10 @@
+import {GameObject} from '../../core/GameObject'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a camera that captures a scene.
 */
-class Camera extends GameObject{
+export class Camera extends GameObject{
   /**
     * Create an Camera.
     * @param {string} [id] - name of the Camera.

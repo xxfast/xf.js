@@ -1,8 +1,10 @@
+import {Component} from '../../core/components/Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a animatable behaviors like animate, play etc.
 */
-class Animatable extends Component {
+export class Animatable extends Component {
   constructor(owner) {
     super(owner);
     this.states = [];
