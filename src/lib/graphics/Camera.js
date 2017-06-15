@@ -1,4 +1,5 @@
 import {GameObject} from '../core/GameObject'
+import {Rotatable} from '../core/components/Rotatable'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
