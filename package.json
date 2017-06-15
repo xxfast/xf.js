@@ -2,10 +2,10 @@
   "name": "xf.js",
   "version": "1.0.27",
   "description": "simple game framework written in javascript",
-  "main": "distribution/xf.js",
+  "main": "xf.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --presets babel-preset-es2015 --out-dir distribution"
+    "build": "babel src --presets babel-preset-es2015 --out-dir ./"
   },
   "repository": {
     "type": "git",

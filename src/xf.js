@@ -1,14 +1,14 @@
 
 /* importing core */
-import {Game} from './core/Game'
-import {GameObject} from './core/GameObject'
-import {Scene} from './core/Scene'
+import {Game} from './lib/core/Game'
+import {GameObject} from './lib/core/GameObject'
+import {Scene} from './lib/core/Scene'
 
 /* importing geometry */
-import {Polygon} from './geometry/Polygon'
-import {Circle} from './geometry/Circle'
-import {Rectangle} from './geometry/Rectangle'
-import {Triangle} from './geometry/Triangle'
+import {Polygon} from './lib/geometry/Polygon'
+import {Circle} from './lib/geometry/Circle'
+import {Rectangle} from './lib/geometry/Rectangle'
+import {Triangle} from './lib/geometry/Triangle'
 
 var xf = {
   Game: Game,
