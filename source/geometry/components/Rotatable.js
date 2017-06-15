@@ -4,7 +4,7 @@ import {Component} from '../../core/components/Component'
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like rotation for Polygons etc.
 */
-class RotatablePolygon extends Component {
+export class RotatablePolygon extends Component {
   constructor(owner) {
     super(owner);
     this.rotation = 0;

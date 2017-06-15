@@ -10,7 +10,7 @@ import {Debuggable} from '../core/components/Debuggable'
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an abstract polygon with n number of sides
 */
-class Polygon extends GameObject {
+export class Polygon extends GameObject {
   /**
     * Create an polygon with specified vertices
     * @param {[cordinates]]} points - array of sets of coordinates formated as {x:x,y;y}.

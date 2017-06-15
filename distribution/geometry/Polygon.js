@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Polygon = undefined;
+
 var _GameObject2 = require('../core/GameObject');
 
 var _Collidable = require('./components/Collidable');
@@ -23,7 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an abstract polygon with n number of sides
 */
-var Polygon = function (_GameObject) {
+var Polygon = exports.Polygon = function (_GameObject) {
   _inherits(Polygon, _GameObject);
 
   /**

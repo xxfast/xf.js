@@ -4,7 +4,7 @@ import {Component} from '../../core/components/Component'
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like transform, center for Polygons etc.
 */
-class TransformablePolygon extends Component {
+export class TransformablePolygon extends Component {
   constructor(owner) {
     super(owner);
     this.bounderies = {};
@@ -28,17 +28,6 @@ class TransformablePolygon extends Component {
     }
     this.scale = {width:width(), height:height()};
   }
-  /**
-    * get the width as defined by points of the polygon
-    * @return {int} width - width as defined by the polygon
-    */
-
-
-  /**
-    * get the height as defined by points of the polygon
-    * @return {int} height - height as defined by the polygon
-    */
-
 
   /**
     * @override
