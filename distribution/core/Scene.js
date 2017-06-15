@@ -9,7 +9,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _GameObject2 = require('GameObject');
 
-var _Manager = require('managers/Manager');
+var _Manager = require('./managers/Manager');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 

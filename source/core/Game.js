@@ -1,4 +1,4 @@
-import {SceneManager} from 'managers/SceneManager'
+import {SceneManager} from './managers/SceneManager'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)

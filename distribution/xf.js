@@ -1,10 +1,10 @@
 'use strict';
 
-var _Game = require('core/Game');
+var _Game = require('./core/Game');
 
-var _GameObject = require('core/GameObject');
+var _GameObject = require('./core/GameObject');
 
-var _Scene = require('core/Scene');
+var _Scene = require('./core/Scene');
 
 var xf = {
   Game: _Game.Game,

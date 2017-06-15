@@ -1,5 +1,5 @@
 import {GameObject} from 'GameObject'
-import {Manager} from 'managers/Manager'
+import {Manager} from './managers/Manager'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
