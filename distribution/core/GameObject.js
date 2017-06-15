@@ -15,6 +15,8 @@ var _Transformable = require('./components/Transformable');
 
 var _Manager = require('./managers/Manager');
 
+var _Component = require('./components/Component');
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
@@ -70,7 +72,7 @@ var GameObject = exports.GameObject = function () {
       var compfacade = { owner: component.owner };
       var reflected = component;
       while (reflected = Reflect.getPrototypeOf(reflected)) {
-        if (reflected == Component.prototype) break; // base component act as an interface here
+        if (reflected == _Component.Component.prototype) break; // base component act as an interface here
         if (reflected == Object.prototype) break; // no need to redefine Object behavior
         var keys = Reflect.ownKeys(reflected);
         for (var i = 1; i < keys.length; i++) {

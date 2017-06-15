@@ -2,6 +2,7 @@ import {Identifiable} from './components/Identifiable'
 import {Movable} from './components/Movable'
 import {Transformable} from './components/Transformable'
 import {Manager} from './managers/Manager'
+import {Component} from './components/Component'
 
 /**
  * @abstract
