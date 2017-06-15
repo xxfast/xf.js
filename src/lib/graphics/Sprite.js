@@ -1,4 +1,9 @@
 import {GameObject} from '../core/GameObject'
+import {Rotatable} from '../core/components/Rotatable'
+import {CollidableSprite} from './components/Collidable'
+import {Animatable} from './components/Animatable'
+import {RenderableSprite} from './components/Renderable'
+import {Debuggable} from '../core/components/Debuggable'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
