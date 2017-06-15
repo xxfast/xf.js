@@ -13,7 +13,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a base components that defines a behavior
 */
-var Component = function () {
+var Component = exports.Component = function () {
   function Component(owner) {
     _classCallCheck(this, Component);
 
@@ -67,5 +67,3 @@ var Component = function () {
 
   return Component;
 }();
-
-exports.default = Component;

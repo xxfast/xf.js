@@ -3,9 +3,9 @@
  * @description - Represents a component that help us developers to debug
 */
 
-const Component = require('./Component.js');
+import Component from 'Component'
 
-class Debuggable extends Component {
+export class Debuggable extends Component {
   constructor(owner) {
     super(owner);
     this.debug = { enabled:true,
@@ -84,4 +84,3 @@ class Debuggable extends Component {
 
 }
 
-export default Debuggable;

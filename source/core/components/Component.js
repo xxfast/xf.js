@@ -3,7 +3,7 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a base components that defines a behavior
 */
-class Component {
+export class Component {
   constructor(owner) {
     this.owner = owner;
     this.profiles = {render:{on:1, now:0}};
@@ -33,5 +33,3 @@ class Component {
   */
   render(c,camera) { throw new Error('must be implemented by subclass!');}
 }
-
-export default Component;
