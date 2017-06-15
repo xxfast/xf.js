@@ -1,0 +1,23 @@
+{
+  "name": "xf.js",
+  "version": "1.0.0",
+  "description": "simple game framework written in javascript",
+  "main": "xf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xxfast/xf.js.git"
+  },
+  "keywords": [
+    "xf",
+    "engine"
+  ],
+  "author": "Isuru Kusumal Rajapakse <isuru@xfastgames.com> (http://www.xfastgames.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xxfast/xf.js/issues"
+  },
+  "homepage": "https://github.com/xxfast/xf.js#readme"
+}

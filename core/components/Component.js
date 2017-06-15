@@ -33,3 +33,5 @@ class Component {
   */
   render(c,camera) { throw new Error('must be implemented by subclass!');}
 }
+
+export default Component;

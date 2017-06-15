@@ -2,6 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that help us developers to debug
 */
+
+const Component = require('./Component.js');
+
 class Debuggable extends Component {
   constructor(owner) {
     super(owner);
@@ -80,3 +83,5 @@ class Debuggable extends Component {
   }
 
 }
+
+export default Debuggable;
