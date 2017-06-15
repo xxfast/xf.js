@@ -1,8 +1,11 @@
 
-import {Component} from './core/components/Component'
+/* Importing Core */
+import {Game,GameObject,Scene} from './core'
 
 var xf = {
-  Component: Component
+  Game: Game,
+  GameObject: GameObject,
+  Scene: Scene,
 };
 
 module.exports = xf;

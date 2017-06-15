@@ -2,7 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like transform, center etc.
 */
-class Transformable extends Component{
+import {Component} from 'Component'
+
+export class Transformable extends Component{
   constructor(owner) {
     super(owner);
     this.origin = {x:0,y:0};

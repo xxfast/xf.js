@@ -1,8 +1,12 @@
+import {Identifiable,Movable,Transformable} from 'components'
+import {Manager} from 'managers/Manager'
+
 /**
  * @abstract
  * Class representing an game object.
  */
- class GameObject {
+
+export class GameObject {
    /**
      * Create an GameObject.
      * @param {string} id - name of the GameObject.

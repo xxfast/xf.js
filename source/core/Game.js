@@ -2,7 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a single game instance
 */
-class Game {
+import {SceneManager} from 'managers/SceneManager'
+
+export class Game {
   constructor() {
     this.managers = { scenes: new SceneManager() };
     this.states = [];

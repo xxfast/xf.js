@@ -2,7 +2,7 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Virtual manager class that is responsible in managing a single component behavior.
 */
-class Manager {
+export class Manager {
   constructor() {
     this.managed = [];
     this.profiles = {render:{on:1, now:0}};

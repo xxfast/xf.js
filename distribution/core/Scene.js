@@ -1,18 +1,27 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Scene = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _GameObject2 = require('GameObject');
+
+var _Manager = require('managers/Manager');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author - Isuru Kusumal Rajapakse (xxfast)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description - Represents a single scene that contains child sprite elements
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
 
-/**
- * @author - Isuru Kusumal Rajapakse (xxfast)
- * @description - Represents a single scene that contains child sprite elements
-*/
-var Scene = function (_GameObject) {
+
+var Scene = exports.Scene = function (_GameObject) {
   _inherits(Scene, _GameObject);
 
   /**
@@ -52,7 +61,7 @@ var Scene = function (_GameObject) {
 
 
   _createClass(Scene, [{
-    key: "contains",
+    key: 'contains',
     value: function contains(object) {
       for (var i = 0; i < this.elements.length; i++) {
         if (this.elements[i].identify(object.id)) {
@@ -69,14 +78,14 @@ var Scene = function (_GameObject) {
     */
 
   }, {
-    key: "add",
+    key: 'add',
     value: function add(args) {
       for (var i = 0; i < arguments.length; i++) {
         this.elements.push(arguments[i]);
         for (var component in arguments[i].components) {
           if (arguments[i].components.hasOwnProperty(component)) {
             if (!this.managers.hasOwnProperty(component)) {
-              this.managers[component] = new Manager();
+              this.managers[component] = new _Manager.Manager();
               this.managers[component].adopt(this.manageProfiles[component]);
             }
             this.managers[component].manage(arguments[i].components[component], this.manageProfiles[component]);
@@ -93,7 +102,7 @@ var Scene = function (_GameObject) {
     */
 
   }, {
-    key: "remove",
+    key: 'remove',
     value: function remove(obj) {
       this.elements = this.elements.filter(function (item) {
         return item !== obj;
@@ -108,7 +117,7 @@ var Scene = function (_GameObject) {
     */
 
   }, {
-    key: "observe",
+    key: 'observe',
     value: function observe() {
       var camera = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
@@ -122,7 +131,7 @@ var Scene = function (_GameObject) {
     */
 
   }, {
-    key: "initialise",
+    key: 'initialise',
     value: function initialise() {
       for (var manager in this.managers) {
         if (this.managers.hasOwnProperty(manager)) {
@@ -136,7 +145,7 @@ var Scene = function (_GameObject) {
     */
 
   }, {
-    key: "update",
+    key: 'update',
     value: function update() {
       for (var manager in this.managers) {
         if (this.managers.hasOwnProperty(manager)) {
@@ -153,7 +162,7 @@ var Scene = function (_GameObject) {
     */
 
   }, {
-    key: "render",
+    key: 'render',
     value: function render(c) {
       var camera = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.observer;
       // {position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}
@@ -197,7 +206,7 @@ var Scene = function (_GameObject) {
       */
 
   }, {
-    key: "clear",
+    key: 'clear',
     value: function clear(c) {
       c.fillStyle = this.background;
       c.clearRect(0, 0, this.scale.width, this.scale.height);
@@ -206,4 +215,4 @@ var Scene = function (_GameObject) {
   }]);
 
   return Scene;
-}(GameObject);
+}(_GameObject2.GameObject);

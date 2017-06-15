@@ -2,7 +2,10 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a single scene that contains child sprite elements
 */
-class Scene extends GameObject{
+import {GameObject} from 'GameObject'
+import {Manager} from 'managers/Manager'
+
+export class Scene extends GameObject{
   /**
     * Create an Scene.
     * @param {string} id - name of the Scene.

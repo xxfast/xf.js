@@ -3,7 +3,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a identifiable components that defines a identifiable behavior
 */
-class Identifiable extends Component{
+import {Component} from 'Component'
+
+export class Identifiable extends Component{
   constructor(owner, id) {
     super(owner);
     this.id = id;

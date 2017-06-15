@@ -1,18 +1,25 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Rotatable = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Component2 = require('Component');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author - Isuru Kusumal Rajapakse (xxfast)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description - Represents a component that defines a behaviors like rotate etc.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
 
-/**
- * @author - Isuru Kusumal Rajapakse (xxfast)
- * @description - Represents a component that defines a behaviors like rotate etc.
-*/
-var Rotatable = function (_Component) {
+
+var Rotatable = exports.Rotatable = function (_Component) {
   _inherits(Rotatable, _Component);
 
   function Rotatable(owner) {
@@ -32,7 +39,7 @@ var Rotatable = function (_Component) {
 
 
   _createClass(Rotatable, [{
-    key: "torque",
+    key: 'torque',
     value: function torque() {
       var degree = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
@@ -46,7 +53,7 @@ var Rotatable = function (_Component) {
     */
 
   }, {
-    key: "rotate",
+    key: 'rotate',
     value: function rotate() {
       var degree = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
@@ -55,11 +62,11 @@ var Rotatable = function (_Component) {
       return this;
     }
   }, {
-    key: "process",
+    key: 'process',
     value: function process() {
       this.rotate(this.rotationVelocity);
     }
   }]);
 
   return Rotatable;
-}(Component);
+}(_Component2.Component);

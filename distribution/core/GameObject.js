@@ -1,6 +1,15 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GameObject = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _components = require('components');
+
+var _Manager = require('managers/Manager');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -8,7 +17,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @abstract
  * Class representing an game object.
  */
-var GameObject = function () {
+
+var GameObject = exports.GameObject = function () {
   /**
     * Create an GameObject.
     * @param {string} id - name of the GameObject.
@@ -26,9 +36,9 @@ var GameObject = function () {
     _classCallCheck(this, GameObject);
 
     this.components = {};
-    this.attach(new Identifiable(this, id));
-    this.attach(new Movable(this));
-    this.attach(new Transformable(this));
+    this.attach(new _components.Identifiable(this, id));
+    this.attach(new _components.Movable(this));
+    this.attach(new _components.Transformable(this));
   }
 
   /**
@@ -38,7 +48,7 @@ var GameObject = function () {
 
 
   _createClass(GameObject, [{
-    key: "clone",
+    key: 'clone',
     value: function clone() {
       return new GameObject(this.id, this.position.x, this.position.y, this.scale.width, this.scale.height);
     }
@@ -50,7 +60,7 @@ var GameObject = function () {
     */
 
   }, {
-    key: "attach",
+    key: 'attach',
     value: function attach(component) {
       Object.assign(this, component);
       var compfacade = { owner: component.owner };

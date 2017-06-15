@@ -1,9 +1,13 @@
 'use strict';
 
-var _Component = require('./core/components/Component');
+var _core = require('./core');
 
 var xf = {
-  Component: _Component.Component
+  Game: _core.Game,
+  GameObject: _core.GameObject,
+  Scene: _core.Scene
 };
+/* Importing Core */
+
 
 module.exports = xf;

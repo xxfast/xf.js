@@ -2,7 +2,10 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like move, translate etc.
 */
-class Movable extends Component {
+
+import {Component} from 'Component'
+
+export class Movable extends Component {
   constructor(owner) {
     super(owner);
     this.position = {x:0,y:0};

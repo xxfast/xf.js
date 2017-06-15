@@ -1,18 +1,25 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SceneManager = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Manager2 = require('Manager');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author - Isuru Kusumal Rajapakse (xxfast)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description - Represents a scene manager managing the scenes of a game
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
 
-/**
- * @author - Isuru Kusumal Rajapakse (xxfast)
- * @description - Represents a scene manager managing the scenes of a game
-*/
-var SceneManager = function (_Manager) {
+
+var SceneManager = exports.SceneManager = function (_Manager) {
   _inherits(SceneManager, _Manager);
 
   function SceneManager() {
@@ -33,7 +40,7 @@ var SceneManager = function (_Manager) {
 
 
   _createClass(SceneManager, [{
-    key: "contains",
+    key: 'contains',
     value: function contains(scene) {
       for (var i = 0; i < this.scenes.length; i++) {
         if (this.scenes[i].identify(scene.id)) {
@@ -50,7 +57,7 @@ var SceneManager = function (_Manager) {
     */
 
   }, {
-    key: "add",
+    key: 'add',
     value: function add(scene) {
       this.scenes.push(scene);
       return this;
@@ -63,7 +70,7 @@ var SceneManager = function (_Manager) {
     */
 
   }, {
-    key: "set",
+    key: 'set',
     value: function set(scene) {
       if (this.contains(scene) < 0) this.add(scene);
       this.current = this.scenes[this.contains(scene)];
@@ -77,7 +84,7 @@ var SceneManager = function (_Manager) {
     */
 
   }, {
-    key: "get",
+    key: 'get',
     value: function get(id) {
       for (var i = 0; i < this.scenes.length; i++) {
         if (this.scenes[i].id == id) return this.scenes[i];
@@ -91,7 +98,7 @@ var SceneManager = function (_Manager) {
     */
 
   }, {
-    key: "remove",
+    key: 'remove',
     value: function remove(id) {
       var index = this.contains(this.get(id));
       var toReturn = index > 0 ? this.scenes.splice(index, 1) : null;
@@ -103,7 +110,7 @@ var SceneManager = function (_Manager) {
     */
 
   }, {
-    key: "process",
+    key: 'process',
     value: function process() {
       if (this.current) {
         this.current.update();
@@ -115,7 +122,7 @@ var SceneManager = function (_Manager) {
     */
 
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       if (this.current) {
         this.current.render();
@@ -124,4 +131,4 @@ var SceneManager = function (_Manager) {
   }]);
 
   return SceneManager;
-}(Manager);
+}(_Manager2.Manager);
