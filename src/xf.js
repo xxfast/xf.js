@@ -2,7 +2,6 @@
 /* importing core */
 import {Game} from './lib/core/Game'
 import {GameObject} from './lib/core/GameObject'
-import {Scene} from './lib/core/Scene'
 
 /* importing geometry */
 import {Polygon} from './lib/geometry/Polygon'
@@ -12,6 +11,7 @@ import {Triangle} from './lib/geometry/Triangle'
 
 /* importing graphics */
 import {Camera} from './lib/graphics/Camera'
+import {Scene} from './lib/graphics/Scene'
 import {Sprite} from './lib/graphics/Sprite'
 
 var xf = {

@@ -4,8 +4,6 @@ var _Game = require('./lib/core/Game');
 
 var _GameObject = require('./lib/core/GameObject');
 
-var _Scene = require('./lib/core/Scene');
-
 var _Polygon = require('./lib/geometry/Polygon');
 
 var _Circle = require('./lib/geometry/Circle');
@@ -16,12 +14,10 @@ var _Triangle = require('./lib/geometry/Triangle');
 
 var _Camera = require('./lib/graphics/Camera');
 
+var _Scene = require('./lib/graphics/Scene');
+
 var _Sprite = require('./lib/graphics/Sprite');
 
-/* importing graphics */
-
-
-/* importing geometry */
 var xf = {
   Game: _Game.Game,
   GameObject: _GameObject.GameObject,
@@ -33,6 +29,12 @@ var xf = {
   Camera: _Camera.Camera,
   Sprite: _Sprite.Sprite
 };
+
+/* importing graphics */
+
+
+/* importing geometry */
+
 /* importing core */
 
 

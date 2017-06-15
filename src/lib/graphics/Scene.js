@@ -1,5 +1,6 @@
-import {GameObject} from './GameObject'
-import {Manager} from './managers/Manager'
+import {GameObject} from '../core/GameObject'
+import {Manager} from '../core/managers/Manager'
+import {Camera} from './Camera'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
