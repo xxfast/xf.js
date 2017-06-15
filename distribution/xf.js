@@ -1,11 +1,11 @@
 'use strict';
 
-var _core = require('core');
+var _index = require('core/index.js');
 
 var xf = {
-  Game: _core.Game,
-  GameObject: _core.GameObject,
-  Scene: _core.Scene
+  Game: _index.Game,
+  GameObject: _index.GameObject,
+  Scene: _index.Scene
 };
 /* Importing Core */
 
