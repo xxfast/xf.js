@@ -1,4 +1,5 @@
-var Component = require('./core/components/Component');
+
+import Component from './core/components/Component'
 
 var xf = {
   Component: Component
