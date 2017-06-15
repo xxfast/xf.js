@@ -1,3 +1,5 @@
+import {Component} from '../../core/components/Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like transform, center for Polygons etc.

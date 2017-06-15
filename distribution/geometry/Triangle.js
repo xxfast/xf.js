@@ -1,4 +1,6 @@
-"use strict";
+'use strict';
+
+var _Polygon2 = require('./Polygon');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -26,4 +28,4 @@ var Triangle = function (_Polygon) {
   }
 
   return Triangle;
-}(Polygon);
+}(_Polygon2.Polygon);

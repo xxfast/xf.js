@@ -1,6 +1,13 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CollidablePolygon = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Component2 = require('../../core/components/Component');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12,7 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a collidable behaviors like collideon, bounds for Polygons etc.
 */
-var CollidablePolygon = function (_Component) {
+var CollidablePolygon = exports.CollidablePolygon = function (_Component) {
   _inherits(CollidablePolygon, _Component);
 
   function CollidablePolygon(owner) {
@@ -35,7 +42,7 @@ var CollidablePolygon = function (_Component) {
 
 
   _createClass(CollidablePolygon, [{
-    key: "bounds",
+    key: 'bounds',
     value: function bounds() {
       this.vertices = [{ x: 0, y: 0 }, { x: +this.scale.width, y: 0 }, { x: +this.scale.width, y: +this.scale.height }, { x: 0, y: 0 + this.scale.height }];
       var rads = -(this.rotation * Math.PI) / 180;
@@ -65,7 +72,7 @@ var CollidablePolygon = function (_Component) {
     */
 
   }, {
-    key: "within",
+    key: 'within',
     value: function within(obj) {
       if (this.rotation == 0 && obj.rotation == 0) {
         if (this.position.x > obj.position.x + obj.scale.width || obj.position.x > this.position.x + this.scale.width) return false;
@@ -76,4 +83,4 @@ var CollidablePolygon = function (_Component) {
   }]);
 
   return CollidablePolygon;
-}(Component);
+}(_Component2.Component);

@@ -1,4 +1,16 @@
-"use strict";
+'use strict';
+
+var _GameObject2 = require('../../core/GameObject');
+
+var _Collidable = require('./components/Collidable');
+
+var _Transformable = require('./components/Transformable');
+
+var _Rotatable = require('./components/Rotatable');
+
+var _Renderable = require('./components/Renderable');
+
+var _Debuggable = require('../../core/components/Debuggable');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -11,7 +23,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an abstract polygon with n number of sides
 */
-
 var Polygon = function (_GameObject) {
   _inherits(Polygon, _GameObject);
 
@@ -29,15 +40,15 @@ var Polygon = function (_GameObject) {
 
     _this.points = points;
     _this.color = color;
-    _this.attach(new TransformablePolygon(_this));
-    _this.attach(new CollidablePolygon(_this));
-    _this.attach(new RotatablePolygon(_this));
-    _this.attach(new RenderablePolygon(_this));
-    _this.attach(new Debuggable(_this));
+    _this.attach(new _Transformable.TransformablePolygon(_this));
+    _this.attach(new _Collidable.CollidablePolygon(_this));
+    _this.attach(new _Rotatable.RotatablePolygon(_this));
+    _this.attach(new _Renderable.RenderablePolygon(_this));
+    _this.attach(new _Debuggable.Debuggable(_this));
     //debug
     _this.bounderies = _this.bounds();
     return _this;
   }
 
   return Polygon;
-}(GameObject);
+}(_GameObject2.GameObject);

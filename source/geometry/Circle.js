@@ -1,3 +1,5 @@
+import {Polygon} from './Polygon'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents an Circle shape

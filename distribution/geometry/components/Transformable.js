@@ -1,6 +1,8 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Component2 = require('../../core/components/Component');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -63,7 +65,7 @@ var TransformablePolygon = function (_Component) {
 
 
   _createClass(TransformablePolygon, [{
-    key: "transform",
+    key: 'transform',
     value: function transform(width, height) {
       for (var i = 0; i < this.points.length; i++) {
         this.points[i].x = this.points[i].x / this.scale.width * width;
@@ -87,7 +89,7 @@ var TransformablePolygon = function (_Component) {
     */
 
   }, {
-    key: "resize",
+    key: 'resize',
     value: function resize(byX, byY) {
       this.transform(this.scale.width + byX, this.scale.height + byY);
       return this;
@@ -102,7 +104,7 @@ var TransformablePolygon = function (_Component) {
     */
 
   }, {
-    key: "center",
+    key: 'center',
     value: function center() {
       var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (this.bounderies.left + this.bounderies.right) / 2;
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (this.bounderies.top + this.bounderies.down) / 2;
@@ -116,9 +118,9 @@ var TransformablePolygon = function (_Component) {
     */
 
   }, {
-    key: "initialise",
+    key: 'initialise',
     value: function initialise() {}
   }]);
 
   return TransformablePolygon;
-}(Component);
+}(_Component2.Component);
