@@ -2,7 +2,7 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a scene manager managing the scenes of a game
 */
-import {Manager} from 'Manager'
+import {Manager} from './Manager'
 
 export class SceneManager extends Manager{
   constructor() {
