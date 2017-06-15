@@ -1,4 +1,4 @@
-import {Component} from '../../core/components/Component'
+import {Component} from '/../../core/components/Component'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
