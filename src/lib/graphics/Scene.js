@@ -25,9 +25,6 @@ export class Scene extends GameObject{
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
-
-    this.components.Transformable.scale.width = w;
-    this.components.Transformable.scale.height = h;
   }
 
   /*
