@@ -25,6 +25,7 @@ export class Scene extends GameObject{
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
+
   }
 
   /*
@@ -107,6 +108,16 @@ export class Scene extends GameObject{
   }
 
   /**
+   * clear the rendered patch for the scene
+   * @param {context} c - the canvas to clear the canvas scene on.
+   */
+  clear(c){
+      c.fillStyle=this.background;
+      c.clearRect(0, 0, this.scale.width, this.scale.height);
+      c.fillRect(0, 0, this.scale.width, this.scale.height );
+  }
+
+  /**
     * renders the scene on the given canvas,
     * if a camera is proviced, then as seen from the given camera
     * @param {context} c - the canvas to draw the scene on.
@@ -145,15 +156,5 @@ export class Scene extends GameObject{
           c.fillText(prop + ': ' + this.debug[prop], 5, (++i)*12);
         }
     }
-  }
-
-  /**
-    * clear the rendered patch for the scene
-    * @param {context} c - the canvas to clear the canvas scene on.
-    */
-  clear(c){
-    c.fillStyle=this.background;
-    c.clearRect(0, 0, this.scale.width, this.scale.height);
-    c.fillRect(0, 0, this.scale.width, this.scale.height );
   }
 }
