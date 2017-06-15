@@ -1,6 +1,6 @@
 {
   "name": "xf.js",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "simple game framework written in javascript",
   "main": "xf.js",
   "scripts": {
