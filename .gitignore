@@ -2,3 +2,5 @@
 /lib
 .log
 .idea
+
+*.log
