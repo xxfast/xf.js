@@ -5,7 +5,7 @@
   "main": "xf.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel lib -o xf.js"
+    "build": "babel source --presets babel-preset-es2015 --out-dir distribution"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/xxfast/xf.js#readme",
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
     "babel-preset-es2015": "^6.24.1"
   }
 }
