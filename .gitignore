@@ -1,5 +1,4 @@
-
+/node_modules
+/lib
 .log
-node_modules
 .idea
-lib
