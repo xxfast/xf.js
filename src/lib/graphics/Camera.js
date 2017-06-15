@@ -1,4 +1,4 @@
-import {GameObject} from '../../core/GameObject'
+import {GameObject} from '../core/GameObject'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
