@@ -1,4 +1,4 @@
-import {GameObject} from 'GameObject'
+import {GameObject} from './GameObject'
 import {Manager} from './managers/Manager'
 
 /**
