@@ -1,9 +1,9 @@
-import {GameObject} from '/core/GameObject'
+import {GameObject} from '.../core/GameObject'
 import {CollidablePolygon} from './components/Collidable'
 import {TransformablePolygon} from './components/Transformable'
 import {RotatablePolygon} from './components/Rotatable'
 import {RenderablePolygon} from './components/Renderable'
-import {Debuggable} from '/core/components/Debuggable'
+import {Debuggable} from '.../core/components/Debuggable'
 
 /**
  * @virtual

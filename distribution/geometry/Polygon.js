@@ -1,6 +1,6 @@
 'use strict';
 
-var _GameObject2 = require('/core/GameObject');
+var _GameObject2 = require('.../core/GameObject');
 
 var _Collidable = require('./components/Collidable');
 
@@ -10,7 +10,7 @@ var _Rotatable = require('./components/Rotatable');
 
 var _Renderable = require('./components/Renderable');
 
-var _Debuggable = require('/core/components/Debuggable');
+var _Debuggable = require('.../core/components/Debuggable');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
