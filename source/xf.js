@@ -1,6 +1,6 @@
 
 /* Importing Core */
-import {Game,GameObject,Scene} from './core'
+import {Game,GameObject,Scene} from 'core'
 
 var xf = {
   Game: Game,
