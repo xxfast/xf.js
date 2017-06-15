@@ -8,23 +8,22 @@ var _Scene = require('./core/Scene');
 
 var _Polygon = require('./geometry/Polygon');
 
-var _Circle = require('./geometry/Circle');
+// import {Circle} from './geometry/Circle'
+// import {Rectangle} from './geometry/Rectangle'
+// import {Triangle} from './geometry/Triangle'
 
-var _Rectangle = require('./geometry/Rectangle');
-
-var _Triangle = require('./geometry/Triangle');
-
-/* importing geometry */
+/* importing core */
 var xf = {
   Game: _Game.Game,
   GameObject: _GameObject.GameObject,
   Scene: _Scene.Scene,
-  Polygon: _Polygon.Polygon,
-  Circle: _Circle.Circle,
-  Rectangle: _Rectangle.Rectangle,
-  Triangle: _Triangle.Triangle
+  Polygon: _Polygon.Polygon
+  // Circle: Circle,
+  // Rectangle: Rectangle,
+  // Triangle: Triangle,
 };
-/* importing core */
+
+/* importing geometry */
 
 
 module.exports = xf;
