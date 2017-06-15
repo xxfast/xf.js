@@ -1,10 +1,9 @@
+import {Component} from 'Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that help us developers to debug
 */
-
-import {Component} from 'Component'
-
 export class Debuggable extends Component {
   constructor(owner) {
     super(owner);

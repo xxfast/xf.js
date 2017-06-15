@@ -1,4 +1,6 @@
-import {Identifiable,Movable,Transformable} from 'components'
+import {Identifiable} from 'components/Identifiable'
+import {Movable} from 'components/Movable'
+import {Transformable} from 'components/Transformable'
 import {Manager} from 'managers/Manager'
 
 /**

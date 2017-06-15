@@ -1,9 +1,9 @@
+import {Component} from 'Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like transform, center etc.
 */
-import {Component} from 'Component'
-
 export class Transformable extends Component{
   constructor(owner) {
     super(owner);

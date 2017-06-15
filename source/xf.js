@@ -1,6 +1,8 @@
 
 /* Importing Core */
-import {Game,GameObject,Scene} from 'core/index.js'
+import {Game} from 'core/Game'
+import {GameObject} from 'core/GameObject'
+import {Scene} from 'core/Scene'
 
 var xf = {
   Game: Game,

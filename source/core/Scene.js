@@ -1,10 +1,10 @@
+import {GameObject} from 'GameObject'
+import {Manager} from 'managers/Manager'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a single scene that contains child sprite elements
 */
-import {GameObject} from 'GameObject'
-import {Manager} from 'managers/Manager'
-
 export class Scene extends GameObject{
   /**
     * Create an Scene.

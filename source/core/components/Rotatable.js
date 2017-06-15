@@ -1,9 +1,9 @@
+import {Component} from 'Component'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a component that defines a behaviors like rotate etc.
 */
-import {Component} from 'Component'
-
 export class Rotatable extends Component {
   constructor(owner) {
     super(owner);

@@ -1,9 +1,10 @@
+import {Component} from 'Component'
+
 /**
  * @virtual
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a identifiable components that defines a identifiable behavior
 */
-import {Component} from 'Component'
 
 export class Identifiable extends Component{
   constructor(owner, id) {

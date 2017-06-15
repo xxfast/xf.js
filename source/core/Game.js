@@ -1,8 +1,9 @@
+import {SceneManager} from 'managers/SceneManager'
+
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a single game instance
 */
-import {SceneManager} from 'managers/SceneManager'
 
 export class Game {
   constructor() {
