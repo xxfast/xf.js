@@ -1,6 +1,6 @@
 'use strict';
 
-var _core = require('./core');
+var _core = require('core');
 
 var xf = {
   Game: _core.Game,
