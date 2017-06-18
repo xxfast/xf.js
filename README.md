@@ -2,9 +2,7 @@
 
 # xf.js 
 
-```diff
-- [1.0.20] This is an experimental development built
-```
+**[1.0.20] This is an experimental development built**
 
 ## Synopsis
 
