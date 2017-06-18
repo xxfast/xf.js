@@ -13,7 +13,7 @@ import {Debuggable} from '../core/components/Debuggable'
 export class Polygon extends GameObject {
   /**
     * Create an polygon with specified vertices
-    * @param {[cordinates]]} points - array of sets of coordinates formated as {x:x,y;y}.
+    * @param {cordinates} points - array of sets of coordinates formated as {x:x,y;y}.
     */
   constructor(points=[{x:0,y:0}],color={fill:false,stroke:false}) {
     super();
