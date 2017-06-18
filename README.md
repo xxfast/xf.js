@@ -31,13 +31,23 @@ import using require
 
 ### Graphics
 
-Creating sprites are ever so easy
+
+Creating sprites are ever so easy.
+<img src="http://i.imgur.com/X8Nwaxc.png" align="right" />
 
 ```javascript
-    var mario = new xf.Sprite("mario")
+    var mario = new xf.Sprite("mario").source(["assets/mario.png"])
 ```
 
-Even the animated ones
+wants some layers to your sprites? try this
+
+```javascript
+    var mario = new xf.Sprite("mario").source(["assets/mario.png","assets/mario2.png"])
+```
+
+Want to animate your sprites, add a spritesheet and define frames simply like this
+<img src="https://media.giphy.com/media/a2mwR72nJsTS0/giphy.gif" width="10%" align="right" />
+
 
 ```javascript
     var tim = new Sprite("tim")
@@ -46,6 +56,7 @@ Even the animated ones
 ```
     
 All component functionality can be addressed directly, for instance, if you want to rotate and transfrom a sprite etc., you can do
+<img src="https://media.giphy.com/media/12jwUnRZyIIMGQ/giphy.gif" width="20%" align="right" />
 
 ```javascript
     var tim = new xf.Sprite("tim")
