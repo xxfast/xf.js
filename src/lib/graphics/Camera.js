@@ -73,8 +73,8 @@ export class Camera extends GameObject{
 
   /**
     * converts camera relative position to absolute position
-    * @param {x:y:} relative - position witin the camera.
-    *  @return {x:y:} absolute - absolute position
+    * @param {vector2} relative - position witin the camera.
+    *  @return {vector2} absolute - absolute position
   */
   absolute(relative){
     var xratio = this.target.scene.canvas.width / this.scale.width;
@@ -85,8 +85,8 @@ export class Camera extends GameObject{
 
   /**
     * converts camera relative position to absolute position
-    * @param {x:y:} relative - position witin the camera.
-    *  @return {x:y:} absolute - absolute position
+    * @param {vector2} relative - position witin the camera.
+    *  @return {vector2} absolute - absolute position
   */
   relative(absolute){
     return {x:absolute.x-this.position.x,y:absolute.y-this.position.y};

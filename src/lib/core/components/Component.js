@@ -9,8 +9,8 @@ export class Component {
     this.profiles = {render:{on:1, now:0}};
   }
 
-  /*
-    * assigns the component manager for this component
+  /**
+    * assigns a component manager for this component
     *   @returns {Component} itself
   */
   responds(manager){
@@ -18,18 +18,20 @@ export class Component {
     return this;
   }
 
-  /*
-    * defines how the component should initialise after attaching to gameobject
+  /**
+    * defines how a component should initialise after attaching to it's game object
   */
   initialise() { throw new Error('must be implemented by subclass!'); }
 
-  /*
-    * defines how the component state change on one update
+  /**
+    * defines how a component state change on one update call
   */
   process() { throw new Error('must be implemented by subclass!'); }
 
   /*
-    * defines how this component handles rendering
-  */
+   * defines how a component should be handling rendering calls
+   *   @param {context} c - the canvas context to draw the sprite on.
+   *   @param {Camera} camera - the camera to look at the sprite from.
+   */
   render(c,camera) { throw new Error('must be implemented by subclass!');}
 }
