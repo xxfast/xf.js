@@ -53,6 +53,7 @@ Want to animate your sprites, add a spritesheet and define frames simply like th
     var tim = new Sprite("tim")
                  .animate("idle",["assets/tim/Tim_idle.png"],2,12,22,0,-1)
                  .animate("run",["assets/tim/Tim_run.png"],4,7,27,0,-1)
+                 .play(-0.8)
 ```
     
 All component functionality can be addressed directly, for instance, if you want to rotate and transfrom a sprite etc., you can do
