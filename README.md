@@ -13,20 +13,16 @@ This project is inspred by macite's Swingame
 
 using npm 
 
-`npm install xf.js`
+    `npm install xf.js`
 
 ## API Reference
 
- 
-
-## Tests
-
-// TODO
+API reference available [here](https://github.com/xxfast/xf.js/wiki)  
 
 ## Contributors
 
-// TODO
+"All by myself" 🎶
 
 ## License
 
-// TODO
+MIT
