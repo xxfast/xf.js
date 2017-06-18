@@ -1,0 +1,30 @@
+{
+  "name": "xf.js",
+  "version": "1.2.3",
+  "description": "simple game framework written in javascript",
+  "main": "xf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --presets babel-preset-es2015 --out-dir ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xxfast/xf.js.git"
+  },
+  "keywords": [
+    "xf",
+    "engine"
+  ],
+  "author": "Isuru Kusumal Rajapakse <isuru@xfastgames.com> (http://www.xfastgames.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xxfast/xf.js/issues"
+  },
+  "homepage": "https://github.com/xxfast/xf.js#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
