@@ -2,6 +2,10 @@
 
 # xf.js 
 
+```diff
+- [1.0.20] This is an experimental development built
+```
+
 ## Synopsis
 
 a simple 2d game framework written entirely with javascript, intended for beginner programmers to get starting making games right away.
@@ -27,7 +31,13 @@ import using require
 
 ### Core
 
-// TODO
+Create a game and add a scene 
+
+```javascript
+    var myGame = new xf.Game();
+    var scene = new xf.Scene("test","#FFF");
+    myGame.scenes().set(scene);
+```
 
 ### Graphics
 
@@ -75,7 +85,24 @@ All component functionality can be addressed directly, for instance, if you want
 
 ### Geometry
 
-// TODO
+Want just shapes to be rendered? easy,
+<img src="https://media.giphy.com/media/uHX2LCiPPKzPW/giphy.gif" width="20%" align="right" />
+```javascript
+    var arrow = new xf.Polygon([{x:10,y:0},{x:10,y:10},{x:0,y:+10},{x:30,y:30}],{fill:"red",stroke:"black"})
+                           .translate(200,200)
+                           .transform(60,60)
+                           .torque(2)
+                           .center();
+```
+
+or use predefined shapes
+<img src="http://i.imgur.com/2lpjNhT.png" width="15%" align="right" />
+```javascript
+    var circle = new Circle({fill:"grey",stroke:"black"},0,0,10)
+                    .translate(200,200)
+                    .transform(60,60)
+                    .center();
+```
 
 A comprehensive tutorial available [here](https://github.com/xxfast/xf.js/tutorial)  
 
