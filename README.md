@@ -102,7 +102,7 @@ or use predefined shapes
                     .center();
 ```
 
-A comprehensive tutorial available [here](https://github.com/xxfast/xf.js/tutorial)  
+A comprehensive tutorial available [here](https://github.com/xxfast/xf.js/tutorial) (coming soon...) 
 
 ## API Reference
 
