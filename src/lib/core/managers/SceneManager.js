@@ -81,9 +81,9 @@ export class SceneManager extends Manager{
   /**
     *  render the current scene the SceneManager is focused on
   */
-  render(){
+  render(cc){
     if(this.current){
-      this.current.render();
+      this.current.render(cc);
     }
   }
 }

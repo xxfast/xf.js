@@ -108,7 +108,7 @@ export class Manager {
   */
   render(c,camera){
     this.beforeRender();
-    if(this.shouldRender()){
+    if(true){//this.shouldRender()){
       for (var i = 0; i < this.managed.length; i++) {
         if(this.managed[i].hasOwnProperty("render"))
           this.managed[i].render.call(this.managed[i].owner,c,camera);
