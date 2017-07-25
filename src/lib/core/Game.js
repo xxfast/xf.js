@@ -65,7 +65,7 @@ export class Game {
   */
   start(){
     var callback = this;
-    window.onload = function (callback) {
+    window.onload = function () {
         console.log("callback = " + callback);
         console.log("callback.display = " +  callback.display);
         console.log("callback.display = " +  callback.display);

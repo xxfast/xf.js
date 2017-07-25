@@ -94,7 +94,7 @@ export class Manager {
   }
 
   /*
-    * component logic before rendeing
+    * component logic before rendering
   */
   beforeRender(){
     this.profiles.render.now++;
