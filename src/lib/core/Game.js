@@ -34,7 +34,7 @@ export class Game {
        root document body, otherwise will be attached to the given node
     */
     if(this.display.container == null){
-      this.display.container = window;
+      this.display.container = document.body; // window;
       container = this.display.container;
       console.log("container is set to " + container);
     }
