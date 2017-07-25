@@ -66,6 +66,10 @@ export class Game {
   start(){
     var callback = this;
     window.onload = function (callback) {
+        console.log("callback = " + callback);
+        console.log("callback.display = " +  callback.display);
+        console.log("callback.display = " +  callback.display);
+        console.log("callback.display.options = " +  callback.display.options);
         setInterval(callback.update, callback.display.options.framerate);
     }
   }
