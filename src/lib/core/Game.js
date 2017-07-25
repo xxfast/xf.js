@@ -70,6 +70,7 @@ export class Game {
         console.log("callback.display = " +  callback.display);
         console.log("callback.display = " +  callback.display);
         console.log("callback.display.options = " +  callback.display.options);
+        callback.update.caller(callback);
         setInterval(callback.update, callback.display.options.framerate);
     }
   }
