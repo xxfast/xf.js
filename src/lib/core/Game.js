@@ -11,13 +11,14 @@ export class Game {
     *   @returns {Game} itself
   */
   constructor() {
-    this.managers = { scenes: new SceneManager() };
+    this.managers = { scenes: new SceneManager(this) };
     this.states = [];
     this.canvas = null;
     this.display = { options:{
                         fullscreen:false,
                         framerate: 60
                      },
+                     canvas: null,
                      context: null,
                      container: null
                    };
@@ -39,8 +40,8 @@ export class Game {
       console.log("container is set to " + container);
     }
 
-    var w = this.canvas.width = container.innerWidth;
-    var h = this.canvas.height = container.innerHeight;
+    var w = this.canvas.width;// = container.innerWidth; // buggy
+    var h = this.canvas.height;// = container.innerHeight;
     var scale = Math.min(container.innerHeight / h, container.innerWidth / w);
 
     if(this.display.container==null){
@@ -55,6 +56,7 @@ export class Game {
     }else{
       this.display.container.appendChild(this.canvas);
     }
+    this.display.canvas = this.canvas;
     this.display.context = this.canvas.getContext("2d");
     return this;
   }

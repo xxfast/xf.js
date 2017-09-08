@@ -4,6 +4,7 @@
 */
 export class Manager {
   constructor() {
+    this.owner = null;
     this.managed = [];
     this.profiles = {render:{on:1, now:0}};
   }

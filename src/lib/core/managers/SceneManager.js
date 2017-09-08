@@ -5,10 +5,20 @@
 import {Manager} from './Manager'
 
 export class SceneManager extends Manager{
-  constructor() {
+  constructor(owner) {
     super();
+    this.owner = owner;
     this.scenes = [];
     this.current = null;
+  }
+
+  /*
+    * initialises the scene manager's context, and sets each scene's canvases
+    *   @returns {SceneManager} self
+  */
+  initialise(){
+    // TODO : more stuff goes in here
+    return this;
   }
 
   /*
