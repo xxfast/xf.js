@@ -71,10 +71,6 @@ export class Game {
   start(){
     var callback = this;
     window.onload = function () {
-        console.log("callback = " + callback);
-        console.log("callback.display = " +  callback.display);
-        console.log("callback.display = " +  callback.display);
-        console.log("callback.display.options = " +  callback.display.options);
         setInterval(function () {
             callback.update.call(callback);
         }, callback.display.options.framerate / 1000);
