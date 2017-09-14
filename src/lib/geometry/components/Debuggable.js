@@ -30,7 +30,11 @@ export class DebuggablePolygon extends Component {
      *   @returns {GameObject} itself
      */
     render(c,camera){
-        if(this.debug){
+        if(this.debug && this.debug.enabled){
+            var cwidth = camera.target.scene.canvas.width;
+            var cheight = camera.target.scene.canvas.height;
+            var cwratio =  camera.target.scene.canvas.width/camera.scale.width ;
+            var chratio =  camera.target.scene.canvas.height/camera.scale.height ;
             if(this.debug.drawBounds){
                 c.strokeStyle="red";
                 var xboffset = ((this.position.x+this.bounderies.left)*cwratio);
