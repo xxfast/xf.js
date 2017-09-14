@@ -114,8 +114,8 @@ export class Scene extends GameObject{
    */
   clear(c){
       c.fillStyle=this.background;
-      c.clearRect(0, 0, this.scale.width, this.scale.height);
-      c.fillRect(0, 0, this.scale.width, this.scale.height );
+      c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      c.fillRect(0, 0, this.canvas.width, this.canvas.height );
   }
 
   /**

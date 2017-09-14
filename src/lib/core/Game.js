@@ -10,9 +10,10 @@ export class Game {
     * creates the game instance
     *   @returns {Game} itself
   */
-  constructor() {
+  constructor(size={ width:500,height:400 }) {
     this.managers = { scenes: new SceneManager(this) };
     this.states = [];
+    this.size = size;
     this.canvas = null;
     this.display = { options:{
                         fullscreen:false,
@@ -22,6 +23,7 @@ export class Game {
                      context: null,
                      container: null
                    };
+    this.loop = null;
   }
 
   /*
@@ -34,10 +36,11 @@ export class Game {
     /* if no container is specified, then the game will be attached to the root
        root document body, otherwise will be attached to the given node
     */
+    this.canvas.width = this.size.width;
+    this.canvas.height = this.size.height;
     if(this.display.container == null){
       this.display.container = document.body; // window;
       container = this.display.container;
-      console.log("container is set to " + container);
     }
 
     var w = this.canvas.width;// = container.innerWidth; // buggy
@@ -72,7 +75,9 @@ export class Game {
         console.log("callback.display = " +  callback.display);
         console.log("callback.display = " +  callback.display);
         console.log("callback.display.options = " +  callback.display.options);
-        setInterval(callback.update.call(callback), callback.display.options.framerate);
+        setInterval(function () {
+            callback.update.call(callback);
+        }, callback.display.options.framerate / 1000);
     }
   }
 
@@ -88,6 +93,7 @@ export class Game {
     * updates the current scene of this game
   */
   update(){
+      if(this.loop != null) this.loop();
       this.managers.scenes.process();
       this.render();
   }
@@ -96,7 +102,7 @@ export class Game {
     * renders the current scene of this game
   */
   render(){
-    this.managers.scenes.render(this.display.context);
+      this.managers.scenes.render(this.display.context);
   }
 
 }

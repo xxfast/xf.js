@@ -7,7 +7,7 @@ import {Component} from './Component'
 export class Debuggable extends Component {
   constructor(owner) {
     super(owner);
-    this.debug = { enabled:true,
+    this.debug = { enabled:false,
                    drawCollisionMask:false,
                    drawBounds:true,
                    drawCenter: true,

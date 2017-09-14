@@ -3,7 +3,7 @@ import {CollidablePolygon} from './components/Collidable'
 import {TransformablePolygon} from './components/Transformable'
 import {RotatablePolygon} from './components/Rotatable'
 import {RenderablePolygon} from './components/Renderable'
-import {Debuggable} from '../core/components/Debuggable'
+import {DebuggablePolygon} from './components/Debuggable'
 
 /**
  * @virtual
@@ -23,7 +23,7 @@ export class Polygon extends GameObject {
     this.attach(new CollidablePolygon(this));
     this.attach(new RotatablePolygon(this));
     this.attach(new RenderablePolygon(this));
-    this.attach(new Debuggable(this));
+    this.attach(new DebuggablePolygon(this));
     //debug
     this.bounderies = this.bounds();
   }
