@@ -1,4 +1,5 @@
 import {SceneManager} from '../graphics/managers/SceneManager'
+import {InputManager} from './managers/InputManager'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
@@ -14,7 +15,7 @@ export class Game {
     this.states = [];
     this.size = size;
     this.canvas = null;
-    this.managers = { scenes: new SceneManager(this) };
+    this.managers = { input: new InputManager(this), scenes: new SceneManager(this)};
     this.display = { options:{
                         fullscreen:false,
                         framerate: 60
@@ -23,6 +24,7 @@ export class Game {
                      context: null,
                      container: null
                    };
+    this.input = this.managers.input;
     this.init = null;
     this.loop = null;
     this.build();
@@ -95,6 +97,7 @@ export class Game {
   update(){
       if(this.loop != null) this.loop();
       this.managers.scenes.process();
+      this.managers.input.process();
       this.render();
   }
 
