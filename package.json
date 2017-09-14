@@ -1,11 +1,11 @@
 {
   "name": "xf.js",
-  "version": "1.2.6",
+  "version": "1.2.15",
   "description": "simple game framework written in javascript",
   "main": "xf.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --presets babel-preset-es2015 --out-dir ./",
+    "build": "babel src --presets babel-preset-es2015 --out-dir ./ && babel src --presets babel-preset-es2015 --out-dir ./",
     "minify": "babel src --presets babel-preset-es2015 --out-dir ./",
     "doc": "doxdox 'src/lib/**/*.js' --layout markdown --output 'doc/'"
   },

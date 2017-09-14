@@ -25,7 +25,20 @@ export class Scene extends GameObject{
     this.observer = null;
     this.background = bg;
     this.canvas = canvas;
+    this.initialise();
   }
+
+  /**
+    * initialise the scene and components
+  */
+  initialise(){
+    for (var manager in this.managers) {
+      if (this.managers.hasOwnProperty(manager)) {
+        this.managers[manager].initialise();
+      }
+    }
+  }
+
 
   /*
     * checks whether the givens gameobject is a part of this scene
@@ -85,17 +98,6 @@ export class Scene extends GameObject{
   }
 
   /**
-    * initialise the scene and components
-  */
-  initialise(){
-    for (var manager in this.managers) {
-      if (this.managers.hasOwnProperty(manager)) {
-        this.managers[manager].initialise();
-      }
-    }
-  }
-
-  /**
     * updates the scene once
   */
   update(){
@@ -112,17 +114,17 @@ export class Scene extends GameObject{
    */
   clear(c){
       c.fillStyle=this.background;
-      c.clearRect(0, 0, this.scale.width, this.scale.height);
-      c.fillRect(0, 0, this.scale.width, this.scale.height );
+      c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      c.fillRect(0, 0, this.canvas.width, this.canvas.height );
   }
 
   /**
     * renders the scene on the given canvas,
-    * if a camera is proviced, then as seen from the given camera
+    * if a camera is provided, then as seen from the given camera
     * @param {context} c - the canvas to draw the scene on.
     * @param {Camera} [camera=false] - the camera to look at the scene from.
   */
-  render(c,camera=this.observer){ // {position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}
+  render(c, camera=this.observer){ // {position:{x:0,y:0},scale:{width:1,height:1},rotation:0,target:{scene:{canvas:{width:1,height:1}}}}
     this.canvas = c.canvas;
     this.clear(c);
     c.save();

@@ -4,6 +4,7 @@
 */
 export class Manager {
   constructor() {
+    this.owner = null;
     this.managed = [];
     this.profiles = {render:{on:1, now:0}};
   }
@@ -94,7 +95,7 @@ export class Manager {
   }
 
   /*
-    * component logic before rendeing
+    * component logic before rendering
   */
   beforeRender(){
     this.profiles.render.now++;
@@ -108,7 +109,7 @@ export class Manager {
   */
   render(c,camera){
     this.beforeRender();
-    if(this.shouldRender()){
+    if(true){//this.shouldRender()){
       for (var i = 0; i < this.managed.length; i++) {
         if(this.managed[i].hasOwnProperty("render"))
           this.managed[i].render.call(this.managed[i].owner,c,camera);
