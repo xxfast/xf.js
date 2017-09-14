@@ -5,7 +5,7 @@
   "main": "xf.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --presets babel-preset-es2015 --out-dir ./ && babel src --presets babel-preset-es2015 --out-dir ./../xf-quick-start/node_modules/xf.js/",
+    "build": "babel src --presets babel-preset-es2015 --out-dir ./ && babel src --presets babel-preset-es2015 --out-dir ./",
     "minify": "babel src --presets babel-preset-es2015 --out-dir ./",
     "doc": "doxdox 'src/lib/**/*.js' --layout markdown --output 'doc/'"
   },
