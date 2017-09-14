@@ -2,7 +2,9 @@
  * @author - Isuru Kusumal Rajapakse (xxfast)
  * @description - Represents a scene manager managing the scenes of a game
 */
-import {Manager} from './Manager'
+import {Manager} from '../../core/managers/Manager'
+import {Camera} from './../Camera'
+import {Scene} from './../Scene'
 
 export class SceneManager extends Manager{
   constructor(owner) {
@@ -10,15 +12,18 @@ export class SceneManager extends Manager{
     this.owner = owner;
     this.scenes = [];
     this.current = null;
+    this.initialise();
   }
 
   /*
-    * initialises the scene manager's context, and sets each scene's canvases
+    * initialises the scene manager's context, and creates the default scene and a default camera
     *   @returns {SceneManager} self
   */
   initialise(){
-    // TODO : more stuff goes in here
-    return this;
+      var camera = new Camera("default").transform(this.owner.size.width,this.owner.size.height).center();
+      var scene = new Scene("default","#eaeaea").observe(camera);
+      this.set(scene);
+      return this;
   }
 
   /*

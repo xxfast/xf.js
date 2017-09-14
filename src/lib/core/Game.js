@@ -1,4 +1,4 @@
-import {SceneManager} from './managers/SceneManager'
+import {SceneManager} from '../graphics/managers/SceneManager'
 
 /**
  * @author - Isuru Kusumal Rajapakse (xxfast)
@@ -11,10 +11,10 @@ export class Game {
     *   @returns {Game} itself
   */
   constructor(size={ width:500,height:400 }) {
-    this.managers = { scenes: new SceneManager(this) };
     this.states = [];
     this.size = size;
     this.canvas = null;
+    this.managers = { scenes: new SceneManager(this) };
     this.display = { options:{
                         fullscreen:false,
                         framerate: 60
@@ -23,7 +23,9 @@ export class Game {
                      context: null,
                      container: null
                    };
+    this.init = null;
     this.loop = null;
+    this.build();
   }
 
   /*
@@ -65,10 +67,11 @@ export class Game {
   }
 
   /*
-    * run the game loop
+    * run initialisation script and run the game loop
     *   @returns {Game} itself
   */
   start(){
+    if(this.init != null) this.init();
     var callback = this;
     window.onload = function () {
         setInterval(function () {
@@ -86,7 +89,7 @@ export class Game {
   }
 
   /*
-    * updates the current scene of this game
+    * runs the game loop once and updates the current scene of this game
   */
   update(){
       if(this.loop != null) this.loop();
