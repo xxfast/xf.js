@@ -82,10 +82,11 @@ export class Game {
 
   /*
     * gets the scene manager of this game
-    *   @returns {SceneManager} sceneManager
+    *   @returns {Game} itself
   */
-  scenes(){
-    return this.managers.scenes;
+  include(what, scene=this.managers.scenes.current){
+      scene.add(...what);
+      return this;
   }
 
   /*
